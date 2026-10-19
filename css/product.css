@@ -453,3 +453,40 @@
     font-size: 1rem;
   }
 }
+
+/* ---- Informations produit (Composition, Allergènes…) : libellé à gauche, valeur à droite ---- */
+.single-product .summary .gb-product-info {
+  margin: 0; /* le filet au-dessus du prix ferme le bloc */
+}
+
+.single-product .summary .gb-product-info__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5, 0.25rem);
+  margin: 0;
+  padding-block: var(--space-15);
+  border-block-start: var(--border-width-strong) dotted var(--color-black);
+}
+
+@media (min-width: 48em) {
+  .single-product .summary .gb-product-info__row {
+    grid-template-columns: 12.5rem minmax(0, 1fr);
+    column-gap: var(--space-25);
+  }
+}
+
+.single-product .summary .gb-product-info__label {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: var(--font-weight-regular);
+  text-transform: uppercase;
+}
+
+.single-product .summary .gb-product-info__value {
+  margin: 0;
+}
+
+/* Storefront ajoute une marge au-dessus du prix : inutile quand le bloc d'informations le précède */
+.single-product .summary .gb-product-info + .price {
+  margin-block-start: 0;
+}
