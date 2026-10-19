@@ -174,10 +174,6 @@
   }
 }
 
-/* La barre de pagination placée au-dessus de la grille fait doublon avec celle du bas */
-.storefront-sorting .woocommerce-pagination {
-  display: none;
-}
 
 /* ---- Grille : 1 colonne mobile, 2 tablette, 3 desktop ---- */
 .site-main ul.products,

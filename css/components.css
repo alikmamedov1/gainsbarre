@@ -184,9 +184,14 @@ textarea {
 }
 
 /* ---- Pagination ---- */
+/* Les sélecteurs reprennent ceux de Storefront (« .page-numbers li .page-numbers ») pour l'emporter. */
 .woocommerce-pagination {
-  margin-block-start: var(--space-50);
+  float: none;
+  clear: both;
+  margin-block: var(--space-50) 0;
+  padding: 0;
   text-align: center;
+  border: 0;
 }
 
 .woocommerce-pagination ul.page-numbers {
@@ -200,14 +205,19 @@ textarea {
   list-style: none;
 }
 
+.woocommerce-pagination ul.page-numbers::before,
+.woocommerce-pagination ul.page-numbers::after {
+  content: none;
+  display: none;
+}
+
 .woocommerce-pagination ul.page-numbers li {
   margin: 0;
   border: 0;
   float: none;
 }
 
-.woocommerce-pagination .page-numbers a,
-.woocommerce-pagination .page-numbers span.page-numbers {
+.woocommerce-pagination .page-numbers li .page-numbers {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -222,13 +232,13 @@ textarea {
   border: var(--border-width) solid var(--color-border);
 }
 
-.woocommerce-pagination .page-numbers span.current {
+.woocommerce-pagination .page-numbers li .page-numbers.current {
   color: var(--color-white);
   background-color: var(--color-black);
   border-color: var(--color-black);
 }
 
-.woocommerce-pagination .page-numbers a:hover {
+.woocommerce-pagination .page-numbers li a.page-numbers:hover {
   color: var(--color-white);
   background-color: var(--color-black);
   border-color: var(--color-black);
