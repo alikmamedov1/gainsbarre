@@ -157,6 +157,7 @@
 
 .site-header-cart li {
   margin: 0;
+  list-style: none;
 }
 
 .site-header-cart .cart-contents {
@@ -209,9 +210,31 @@
 }
 
 .site-header-cart .widget_shopping_cart {
+  box-sizing: border-box;
+  /* Storefront donne 100 % de la largeur du panier : depuis que le panier s'adapte à son
+     contenu (« 8 – 74 € »), la liste déroulante était écrasée. Largeur fixe, alignée à droite. */
+  inline-size: 22rem;
+  max-inline-size: calc(100vw - 2 * var(--page-gutter-mobile));
+  font-size: 1rem;
   color: var(--color-text);
   background-color: var(--color-white);
   border: var(--border-width) solid var(--color-border);
+}
+
+.site-header-cart:hover .widget_shopping_cart,
+.site-header-cart.focus .widget_shopping_cart {
+  inset-inline: auto 0;
+}
+
+.site-header-cart .widget_shopping_cart .woocommerce-mini-cart__buttons {
+  display: grid;
+  gap: var(--space-10);
+  margin: 0;
+  padding: var(--space-15);
+}
+
+.site-header-cart .widget_shopping_cart .woocommerce-mini-cart__buttons a.button {
+  margin: 0;
 }
 
 /* ---- Mobile : bouton de menu et barre du bas de Storefront ---- */
