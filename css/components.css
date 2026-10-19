@@ -148,12 +148,21 @@ select,
 }
 
 /* Survol : couleurs inversées, triangle blanc (le noir disparaîtrait sur le fond noir) */
-select:hover:not(:disabled),
+select:hover:not(:disabled):not(.wc-blocks-components-select__select),
 .woocommerce-ordering select:hover:not(:disabled),
 .storefront-sorting .woocommerce-ordering select:hover:not(:disabled) {
   color: var(--color-white);
   background-color: var(--color-black);
   background-image: url("../assets/icon-triangle-down-white.svg");
+  background-repeat: no-repeat;
+  background-position: right var(--space-25) center;
+  background-size: 0.875rem 0.5rem;
+}
+
+/* Listes des blocs WooCommerce (Pays / Région du paiement) : elles ont leur propre flèche et leur
+   propre étiquette flottante ; l'inversion des couleurs les rendait illisibles (triangles répétés). */
+.wc-blocks-components-select__select:hover:not(:disabled) {
+  background-image: none;
 }
 
 /* La liste déroulante s'ouvre toujours en noir sur blanc, même quand le champ est survolé */
