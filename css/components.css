@@ -129,6 +129,28 @@ a.added_to_cart {
   border-radius: 50%;
 }
 
+/* Étiquette de stock : en bas à gauche de la photo (carte produit et fiche produit) */
+.gb-tag.gb-tag--stock {
+  inset-block-start: auto;
+  inset-block-end: var(--space-10);
+}
+
+.gb-tag--disponible::before {
+  background-color: var(--color-black);
+}
+
+.gb-tag--faible::before {
+  background-color: var(--color-red);
+}
+
+.gb-tag--epuise::before {
+  background-color: var(--color-grey-dark);
+}
+
+.gb-tag--epuise {
+  color: var(--color-grey-dark);
+}
+
 /* ---- Champs (liste de tri, quantité, recherche) ---- */
 select,
 .woocommerce-ordering select {

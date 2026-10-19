@@ -163,6 +163,86 @@ add_action( 'woocommerce_before_shop_loop_item_title', 'gainsbarre_service_tag',
 add_action( 'woocommerce_before_single_product_summary', 'gainsbarre_service_tag', 19 );
 
 /* --------------------------------------------------------------------------
+   4 bis. Étiquette de stock sur la carte produit : Disponible / Stock faible / Épuisé
+   Même composant que l'étiquette de service, en bas à gauche de la photo (US-3.1).
+   -------------------------------------------------------------------------- */
+/**
+ * Niveau de stock d'un produit : 'epuise', 'faible' ou 'disponible'.
+ * Produit variable : épuisé si aucune variante n'est en stock, faible si toutes les variantes
+ * en stock sont sous le seuil WooCommerce, sinon disponible.
+ */
+function gainsbarre_stock_level( $product ) {
+	if ( $product->is_type( 'variable' ) ) {
+		$en_stock = 0;
+		$faibles  = 0;
+		foreach ( $product->get_children() as $variation_id ) {
+			$variation = wc_get_product( $variation_id );
+			if ( ! $variation || 'publish' !== $variation->get_status() || ! $variation->is_in_stock() ) {
+				continue;
+			}
+			++$en_stock;
+			$quantite = $variation->get_stock_quantity();
+			if ( $variation->managing_stock() && null !== $quantite && $quantite <= wc_get_low_stock_amount( $variation ) ) {
+				++$faibles;
+			}
+		}
+		if ( 0 === $en_stock ) {
+			return 'epuise';
+		}
+		return ( $faibles === $en_stock ) ? 'faible' : 'disponible';
+	}
+
+	if ( ! $product->is_in_stock() ) {
+		return 'epuise';
+	}
+	$quantite = $product->get_stock_quantity();
+	if ( $product->managing_stock() && null !== $quantite && $quantite <= wc_get_low_stock_amount( $product ) ) {
+		return 'faible';
+	}
+	return 'disponible';
+}
+
+function gainsbarre_stock_tag_html( $product ) {
+	$niveau   = gainsbarre_stock_level( $product );
+	$libelles = array(
+		'disponible' => 'Disponible',
+		'faible'     => 'Stock faible',
+		'epuise'     => 'Épuisé',
+	);
+	return '<span class="gb-tag gb-tag--stock gb-tag--' . esc_attr( $niveau ) . '">' . esc_html( $libelles[ $niveau ] ) . '</span>';
+}
+
+function gainsbarre_stock_tag() {
+	global $product;
+	if ( $product ) {
+		echo gainsbarre_stock_tag_html( $product ); // phpcs:ignore WordPress.Security.EscapeOutput -- déjà échappé
+	}
+}
+
+// Carte produit : la photo et ses étiquettes (service en haut, stock en bas) sont dans un même cadre,
+// pour que les étiquettes restent sur la photo quelle que soit la largeur de l'écran.
+add_action( 'woocommerce_before_shop_loop_item_title', function () {
+	echo '<div class="gb-card-media">';
+}, 5 );
+add_action( 'woocommerce_before_shop_loop_item_title', 'gainsbarre_stock_tag', 16 );
+add_action( 'woocommerce_before_shop_loop_item_title', function () {
+	echo '</div>';
+}, 20 );
+
+// Fiche produit : étiquette de stock en bas à gauche de la photo principale (dans la galerie).
+add_filter( 'woocommerce_single_product_image_thumbnail_html', function ( $html ) {
+	static $deja_ajoutee = false;
+	global $product;
+	if ( $deja_ajoutee || ! $product || ! is_product() ) {
+		return $html;
+	}
+	$deja_ajoutee = true;
+	$etiquette    = gainsbarre_stock_tag_html( $product );
+	$position     = strrpos( $html, '</div>' );
+	return false === $position ? $html . $etiquette : substr_replace( $html, $etiquette, $position, 0 );
+} );
+
+/* --------------------------------------------------------------------------
    5. Carte produit : description courte sous le titre
    -------------------------------------------------------------------------- */
 add_action( 'woocommerce_after_shop_loop_item_title', function () {

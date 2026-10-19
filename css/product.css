@@ -63,6 +63,16 @@
   inset-inline-start: var(--space-10);
 }
 
+/* Étiquette de stock : dans la galerie, en bas à gauche de la photo */
+.single-product .gb-tag.gb-tag--stock {
+  inset-block-start: auto;
+}
+
+.single-product .woocommerce-product-gallery__image,
+.single-product .woocommerce-product-gallery__image--placeholder {
+  position: relative;
+}
+
 /* ---- Informations ---- */
 .single-product .product_title {
   margin: 0 0 var(--space-25);

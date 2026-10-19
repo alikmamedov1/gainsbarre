@@ -233,12 +233,19 @@
   color: var(--color-text);
 }
 
+/* Cadre de la photo : sert de repère aux étiquettes (service en haut, stock en bas) */
+.gb-card-media {
+  position: relative;
+  margin: 0 0 var(--space-10);
+}
+
 .site-main ul.products li.product img {
+  display: block;
   box-sizing: border-box;
   inline-size: 100%;
   aspect-ratio: 4 / 5;
   height: auto;
-  margin: 0 0 var(--space-10);
+  margin: 0;
   object-fit: contain;
   background-color: var(--color-white);
   border: var(--border-width) solid var(--color-border);
