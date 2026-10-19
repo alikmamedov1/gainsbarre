@@ -26,6 +26,7 @@ add_action( 'wp_enqueue_scripts', function () {
 
 	if ( function_exists( 'is_product' ) && is_product() ) {
 		wp_enqueue_script( 'gainsbarre-quantity', $uri . '/js/quantity.js', array(), $version, true );
+		wp_enqueue_script( 'gainsbarre-variation', $uri . '/js/variation.js', array( 'jquery' ), $version, true );
 	}
 }, 100 );
 
@@ -48,6 +49,11 @@ add_action( 'init', function () {
 	remove_action( 'woocommerce_after_shop_loop', 'woocommerce_result_count', 20 );
 	// Le nombre de résultats n'existe pas sur la maquette : on ne garde que la liste de tri.
 	remove_action( 'woocommerce_before_shop_loop', 'woocommerce_result_count', 20 );
+
+	// Pagination : une seule, sous la grille (celle du haut fait doublon), hors du cadre « tri » de Storefront.
+	remove_action( 'woocommerce_before_shop_loop', 'storefront_woocommerce_pagination', 30 );
+	remove_action( 'woocommerce_after_shop_loop', 'storefront_sorting_wrapper', 9 );
+	remove_action( 'woocommerce_after_shop_loop', 'storefront_sorting_wrapper_close', 31 );
 }, 20 );
 
 /**
@@ -190,4 +196,63 @@ add_filter( 'woocommerce_output_related_products_args', function ( $args ) {
 	$args['posts_per_page'] = 3;
 	$args['columns']        = 3;
 	return $args;
+} );
+
+/* --------------------------------------------------------------------------
+   7. Produits variables (sélecteur d'options, prix, stock)
+   -------------------------------------------------------------------------- */
+// 12 produits par page, comme la maquette.
+add_filter( 'loop_shop_per_page', function () {
+	return 12;
+}, 20 );
+
+// Carte produit : « Choisir les options » au lieu de « Sélectionner les options ».
+add_filter( 'woocommerce_product_add_to_cart_text', function ( $texte, $product ) {
+	return $product && $product->is_type( 'variable' ) ? 'Choisir les options' : $texte;
+}, 10, 2 );
+
+// Prix d'un produit variable : « dès 17 € » quand les variantes n'ont pas toutes le même prix.
+add_filter( 'woocommerce_variable_price_html', function ( $html, $product ) {
+	$min = $product->get_variation_price( 'min', true );
+	$max = $product->get_variation_price( 'max', true );
+	if ( '' === $min ) {
+		return $html;
+	}
+	$prix = wc_price( $min ) . $product->get_price_suffix();
+	return ( $min !== $max ) ? 'dès ' . $prix : $prix;
+}, 10, 2 );
+
+// Lien d'annulation du choix : « Réinitialiser » comme sur la maquette.
+add_filter( 'woocommerce_reset_variations_link', function () {
+	return '<a class="reset_variations" href="#" aria-label="Réinitialiser le choix">Réinitialiser</a>';
+} );
+
+// Niveaux de stock d'une variante : En stock / Plus que N en stock (seuil WooCommerce) / Épuisé.
+add_filter( 'woocommerce_get_availability', function ( $disponibilite, $product ) {
+	if ( ! $product instanceof WC_Product_Variation || $product->is_on_backorder() ) {
+		return $disponibilite;
+	}
+	if ( ! $product->is_in_stock() ) {
+		return array(
+			'availability' => 'Épuisé',
+			'class'        => 'out-of-stock',
+		);
+	}
+	$quantite = $product->get_stock_quantity();
+	if ( $product->managing_stock() && null !== $quantite && $quantite <= wc_get_low_stock_amount( $product ) ) {
+		return array(
+			/* translators: %d: quantité restante */
+			'availability' => sprintf( 'Plus que %d en stock', $quantite ),
+			'class'        => 'in-stock gb-stock--low',
+		);
+	}
+	return array(
+		'availability' => 'En stock',
+		'class'        => 'in-stock',
+	);
+}, 10, 2 );
+
+// Produit sans photo : zone grise « Photo à ajouter » (maquette), côté visiteur seulement.
+add_filter( 'woocommerce_placeholder_img_src', function ( $src ) {
+	return is_admin() ? $src : get_stylesheet_directory_uri() . '/assets/photo-a-ajouter.svg';
 } );
