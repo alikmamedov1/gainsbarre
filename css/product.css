@@ -1,0 +1,283 @@
+/* ==========================================================================
+   product.css — Fiche produit (produit simple)
+   ========================================================================== */
+
+/* ---- Mise en page : photo à gauche, informations à droite, le reste pleine largeur ---- */
+.single-product div.product {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-30);
+}
+
+@media (min-width: 48em) {
+  .single-product div.product {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--space-25);
+  }
+
+  .single-product div.product .woocommerce-product-gallery {
+    grid-column: 1 / 6;
+  }
+
+  .single-product div.product .summary {
+    grid-column: 7 / 13;
+  }
+}
+
+.single-product div.product::before,
+.single-product div.product::after {
+  content: none;
+  display: none;
+}
+
+.single-product div.product > .woocommerce-tabs,
+.single-product div.product > .related,
+.single-product div.product > .upsells,
+.single-product div.product > .storefront-product-pagination,
+.single-product div.product > .storefront-sticky-add-to-cart {
+  grid-column: 1 / -1;
+}
+
+.single-product div.product .woocommerce-product-gallery,
+.single-product div.product .summary {
+  float: none;
+  inline-size: auto;
+  margin: 0;
+}
+
+/* ---- Photo ---- */
+.single-product .woocommerce-product-gallery__image img {
+  box-sizing: border-box;
+  inline-size: 100%;
+  height: auto;
+  border: var(--border-width) solid var(--color-border);
+}
+
+.single-product .woocommerce-product-gallery__trigger {
+  display: none;
+}
+
+.single-product .gb-tag {
+  inset-block-start: var(--space-10);
+  inset-inline-start: var(--space-10);
+}
+
+/* ---- Informations ---- */
+.single-product .product_title {
+  margin: 0 0 var(--space-25);
+  font-size: var(--font-size-h1-mobile);
+  font-weight: var(--font-weight-bold);
+}
+
+@media (min-width: 48em) {
+  .single-product .product_title {
+    font-size: var(--font-size-h1);
+  }
+}
+
+.single-product .summary .price {
+  margin: 0 0 var(--space-25);
+  padding-block-start: var(--space-25);
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  border-block-start: var(--border-width-strong) dotted var(--color-black);
+}
+
+.single-product .summary .price::after {
+  content: " TTC";
+  font-size: 1rem;
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-muted);
+}
+
+.single-product .summary .price ins {
+  text-decoration: none;
+  background: none;
+}
+
+.single-product .woocommerce-product-details__short-description {
+  margin: 0 0 var(--space-25);
+}
+
+/* ---- Quantité + bouton ---- */
+.single-product form.cart {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: var(--space-10);
+  margin: 0 0 var(--space-15);
+}
+
+.single-product form.cart .quantity {
+  display: inline-flex;
+  align-items: stretch;
+  block-size: var(--control-height);
+  margin: 0;
+  background-color: var(--color-white);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.single-product form.cart .quantity input.qty {
+  inline-size: 2.5rem;
+  block-size: auto;
+  padding: 0;
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+  border: 0;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.single-product form.cart .quantity input.qty::-webkit-outer-spin-button,
+.single-product form.cart .quantity input.qty::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.gb-quantity__button {
+  inline-size: 2.5rem;
+  padding: 0;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-black);
+  background: none;
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.gb-quantity__button:hover {
+  color: var(--color-white);
+  background-color: var(--color-black);
+}
+
+.single-product form.cart .single_add_to_cart_button {
+  flex: 1;
+  inline-size: auto;
+  min-inline-size: 12rem;
+  margin: 0;
+}
+
+.gb-pickup-notice {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: var(--control-height);
+  margin: 0 0 var(--space-15);
+  padding: var(--space-10) var(--space-25);
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+  background-color: var(--color-white);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.single-product .product_meta {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 1rem;
+  color: var(--color-text-muted);
+}
+
+.single-product .product_meta a {
+  color: var(--color-text-muted);
+}
+
+.single-product div.product .product_meta .tagged_as {
+  display: none; /* les étiquettes midi / soir sont déjà affichées sur la photo */
+}
+
+/* ---- Onglets (Description, Informations complémentaires, Avis) ---- */
+.single-product div.product .woocommerce-tabs {
+  max-inline-size: 66.25rem;
+  margin-block-start: var(--space-30);
+}
+
+/* Storefront place les onglets à gauche et le texte à droite sur desktop : on les empile */
+.single-product div.product .woocommerce-tabs ul.tabs,
+.single-product div.product .woocommerce-tabs .panel {
+  float: none;
+  inline-size: auto;
+  margin-inline: 0;
+}
+
+.single-product .woocommerce-tabs ul.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-10) var(--space-50);
+  margin: 0 0 var(--space-30);
+  padding: 0 0 var(--space-10);
+  border-block-end: var(--border-width-strong) dotted var(--color-black);
+  list-style: none;
+}
+
+.single-product .woocommerce-tabs ul.tabs::before,
+.single-product .woocommerce-tabs ul.tabs::after {
+  content: none;
+  display: none;
+}
+
+.single-product .woocommerce-tabs ul.tabs li {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.single-product .woocommerce-tabs ul.tabs li::before,
+.single-product .woocommerce-tabs ul.tabs li::after {
+  content: none;
+  display: none;
+}
+
+.single-product .woocommerce-tabs ul.tabs li a {
+  display: inline-block;
+  padding: 0;
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-text-muted);
+}
+
+.single-product .woocommerce-tabs ul.tabs li.active a {
+  color: var(--color-black);
+  border-block-end: var(--border-width-strong) solid var(--color-black);
+}
+
+.single-product .woocommerce-tabs ul.tabs li.active a:hover {
+  color: var(--color-white);
+}
+
+.single-product .woocommerce-tabs .panel {
+  margin: 0;
+  padding: 0;
+}
+
+.single-product .woocommerce-tabs .panel h2:first-child {
+  display: none; /* le titre « Description » répète l'onglet */
+}
+
+/* ---- Produits associés : « Vous aimerez aussi » ---- */
+.single-product .related.products,
+.single-product .up-sells {
+  padding-block-start: var(--space-30);
+  border-block-start: var(--border-width-strong) dotted var(--color-black);
+}
+
+.single-product .related.products > h2,
+.single-product .up-sells > h2 {
+  margin: 0 0 var(--space-30);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+  text-transform: uppercase;
+}
+
+/* Barre « ajout rapide » collante de Storefront : absente des maquettes */
+.storefront-sticky-add-to-cart,
+.storefront-product-pagination {
+  display: none;
+}
