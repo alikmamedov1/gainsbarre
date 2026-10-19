@@ -281,3 +281,175 @@
 .storefront-product-pagination {
   display: none;
 }
+
+/* ==========================================================================
+   Produit variable : sélecteur d'options, statut du stock
+   ========================================================================== */
+.single-product .woocommerce-product-gallery__image--placeholder img {
+  box-sizing: border-box;
+  inline-size: 100%;
+  height: auto;
+  border: var(--border-width) solid var(--color-border);
+}
+
+.single-product form.variations_form.cart {
+  display: block;
+}
+
+.single-product form.cart table.variations {
+  display: block;
+  inline-size: 100%;
+  margin: 0 0 var(--space-15);
+  border: 0;
+  border-collapse: collapse;
+}
+
+.single-product form.cart table.variations tbody {
+  display: block;
+}
+
+/* Mobile : le nom de l'option est au-dessus de la liste. Desktop : à gauche, comme la maquette. */
+.single-product form.cart table.variations tr {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-10);
+  margin: 0 0 var(--space-15);
+}
+
+@media (min-width: 48em) {
+  .single-product form.cart table.variations tr {
+    grid-template-columns: 12.5rem minmax(0, 1fr);
+    column-gap: var(--space-25);
+    align-items: start;
+  }
+}
+
+.single-product form.cart table.variations th.label,
+.single-product form.cart table.variations td.value {
+  display: block;
+  padding: 0;
+  text-align: start;
+  background: none;
+  border: 0;
+}
+
+.single-product form.cart table.variations th.label {
+  display: flex;
+  align-items: center;
+  min-block-size: var(--control-height);
+}
+
+.single-product form.cart table.variations th.label label {
+  margin: 0;
+  font-weight: var(--font-weight-regular);
+  text-transform: uppercase;
+}
+
+.single-product form.cart table.variations td.value {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-10);
+}
+
+.single-product form.cart table.variations select {
+  inline-size: 100%;
+  max-inline-size: none; /* Storefront limite la liste à 70 % */
+  margin: 0;
+  font-weight: var(--font-weight-bold);
+  border-color: var(--color-black);
+}
+
+.single-product form.cart table.variations td.value {
+  margin: 0;
+}
+
+.single-product form.cart table.variations a.reset_variations {
+  margin: 0;
+  font-size: 1rem;
+  text-decoration: none;
+  color: var(--color-text-muted);
+  border-block-end: var(--border-width) solid currentColor;
+}
+
+/* Icône « actualiser » ajoutée par Storefront : absente de la maquette */
+.single-product form.cart table.variations a.reset_variations::before {
+  content: none;
+  display: none;
+}
+
+.single-product form.cart table.variations a.reset_variations:hover {
+  color: var(--color-white);
+  background-color: var(--color-black);
+  border-color: var(--color-black);
+}
+
+/* Prix de la variante : repris en haut de la fiche par js/variation.js */
+.single-product .gb-price-synced .woocommerce-variation-price {
+  display: none;
+}
+
+.single-product .woocommerce-variation {
+  margin: 0;
+}
+
+.single-product .woocommerce-variation-description:empty {
+  display: none;
+}
+
+.single-product .woocommerce-variation-description p {
+  margin: 0 0 var(--space-15);
+}
+
+/* Statut du stock : point + texte. Noir = en stock, rouge = stock faible, gris = épuisé */
+.single-product p.stock {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  margin: 0 0 var(--space-15);
+  font-size: 1rem;
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-muted);
+}
+
+.single-product p.stock::before {
+  content: "";
+  flex: none;
+  inline-size: 0.5rem;
+  block-size: 0.5rem;
+  background-color: var(--color-black);
+  border-radius: 50%;
+}
+
+.single-product p.stock.gb-stock--low::before {
+  background-color: var(--color-red);
+}
+
+.single-product p.stock.out-of-stock::before {
+  background-color: var(--color-grey-dark);
+}
+
+/* Quantité + bouton dans le formulaire des variantes */
+.single-product div.product .variations_button::before,
+.single-product div.product .variations_button::after {
+  content: none; /* « clearfix » de Storefront : deviendrait un élément du flex */
+  display: none;
+}
+
+.single-product div.product .woocommerce-variation-add-to-cart {
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: var(--space-10);
+  margin: 0 0 var(--space-15);
+}
+
+/* Mobile : quantité et bouton « Ajouter au panier » sur la même ligne (maquette 390) */
+@media (max-width: 47.99em) {
+  .single-product form.cart .single_add_to_cart_button {
+    min-inline-size: 0;
+    padding-inline: var(--space-10);
+    font-size: 1rem;
+  }
+}
