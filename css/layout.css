@@ -1,0 +1,413 @@
+/* ==========================================================================
+   layout.css — En-tête, navigation, pied de page, conteneur
+   ========================================================================== */
+
+/* ---- Conteneur : 1312 px de contenu + 2 × 64 px de marge (maquette 1440) ---- */
+.col-full {
+  box-sizing: border-box;
+  inline-size: 100%;
+  max-inline-size: var(--site-max-width);
+  margin-inline: auto;
+  padding-inline: var(--page-gutter-mobile);
+}
+
+@media (min-width: 48em) {
+  .col-full {
+    padding-inline: var(--site-gutter);
+  }
+}
+
+/* ---- En-tête : logo à gauche, navigation et panier à droite, filet de points dessous ---- */
+.site-header {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  align-items: center;
+  margin: 0;
+  padding: var(--space-25) 0 0;
+  color: var(--color-text);
+  background-color: var(--color-white);
+  border-bottom: 0;
+}
+
+.site-header::before {
+  content: none; /* supprime le « clearfix » de Storefront qui occuperait une cellule de la grille */
+  display: none;
+}
+
+.site-header::after {
+  content: "";
+  grid-column: 1 / -1;
+  display: block;
+  margin-block-start: var(--space-25);
+  border-block-start: var(--border-width-strong) dotted var(--color-black);
+}
+
+.site-header > .col-full,
+.site-header .storefront-primary-navigation > .col-full {
+  inline-size: auto;
+  max-inline-size: none;
+  margin: 0;
+}
+
+.site-header > .col-full {
+  padding-inline-end: 0;
+}
+
+.site-header .storefront-primary-navigation {
+  display: block;
+  clear: none;
+  background: none;
+}
+
+.site-header .storefront-primary-navigation > .col-full {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-50);
+  padding-inline-start: 0;
+}
+
+/* « .woocommerce-active » : même spécificité que Storefront (73,9 % de largeur, float) */
+.woocommerce-active .site-header .site-branding {
+  float: none;
+  inline-size: auto;
+  max-inline-size: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Le lien a exactement la taille du logo : le contour de focus l'entoure en entier */
+.site-header .site-branding .gb-logo {
+  display: block;
+  inline-size: 15.75rem;  /* logo 1 « petit » du Design System : 252 px */
+  max-inline-size: 100%;
+  outline-offset: 0.25rem;
+}
+
+.site-header .site-branding .gb-logo picture {
+  display: block;
+}
+
+.site-header .site-branding .gb-logo__image {
+  display: block;
+  inline-size: 100%;
+  max-inline-size: none;  /* Storefront limite les images du logo à 230 px */
+  block-size: auto;
+}
+
+/* Recherche et menu secondaire : absents des maquettes */
+.site-header .site-search,
+.site-header .secondary-navigation {
+  display: none;
+}
+
+/* ---- Navigation principale ---- */
+.site-header .storefront-primary-navigation .main-navigation {
+  float: none;
+  flex: 0 0 auto;
+  inline-size: auto;
+  max-inline-size: none;
+  margin: 0; /* navigation et panier groupés à droite par justify-content: flex-end du parent */
+  clear: none;
+}
+
+.site-header .storefront-primary-navigation .main-navigation .primary-navigation {
+  float: none;
+  inline-size: auto;
+}
+
+.main-navigation ul.menu,
+.main-navigation ul.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: var(--space-50);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.main-navigation ul.menu > li > a,
+.main-navigation ul.nav-menu > li > a {
+  display: inline-block;
+  padding: 0;
+  font-weight: var(--font-weight-regular);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.main-navigation ul.menu > li > a:hover,
+.main-navigation ul.nav-menu > li > a:hover,
+.main-navigation ul.menu > li.current-menu-item > a,
+.main-navigation ul.menu > li:hover > a {
+  color: var(--color-white);
+  background-color: var(--color-black);
+}
+
+/* ---- Panier ---- */
+/* Storefront impose 21,7 % de largeur et un float : on l'annule avec la même spécificité */
+.woocommerce-active .site-header .site-header-cart {
+  flex: 0 0 auto;
+  float: none;
+  inline-size: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-header-cart li {
+  margin: 0;
+}
+
+.site-header-cart .cart-contents {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-10);
+  padding: 0;
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.site-header-cart .cart-contents::before {
+  content: "";
+  flex: none;
+  inline-size: 1rem;
+  block-size: 1rem;
+  margin: 0;
+  background: url("../assets/icon-cart.svg") center / contain no-repeat;
+}
+
+.site-header-cart .cart-contents::after {
+  display: none;
+}
+
+.site-header-cart .cart-contents:hover {
+  color: var(--color-white);
+  background-color: var(--color-black);
+}
+
+.site-header-cart .cart-contents:hover::before {
+  filter: invert(1);
+}
+
+/* Affichage « 2 – 16 € » comme sur la maquette ; couleurs du Customizer neutralisées */
+.site-header .site-header-cart .cart-contents,
+.site-header .site-header-cart .cart-contents .count,
+.site-header .site-header-cart .cart-contents .gb-cart__total,
+.site-header .site-header-cart .cart-contents .gb-cart__separator {
+  font-weight: var(--font-weight-bold);
+  opacity: 1;
+  color: var(--color-text);
+}
+
+.site-header .site-header-cart .cart-contents:hover,
+.site-header .site-header-cart .cart-contents:hover .count,
+.site-header .site-header-cart .cart-contents:hover .gb-cart__total,
+.site-header .site-header-cart .cart-contents:hover .gb-cart__separator {
+  color: var(--color-white);
+}
+
+.site-header-cart .widget_shopping_cart {
+  color: var(--color-text);
+  background-color: var(--color-white);
+  border: var(--border-width) solid var(--color-border);
+}
+
+/* ---- Mobile : bouton de menu et barre du bas de Storefront ---- */
+@media (max-width: 47.99em) {
+  .site-header {
+    grid-template-columns: max-content 1fr;
+    padding-block-start: var(--space-15);
+  }
+
+  .site-header .storefront-primary-navigation > .col-full {
+    gap: var(--space-10);
+    padding-inline: 0 var(--page-gutter-mobile);
+  }
+
+  .site-header .site-header-cart {
+    display: none; /* le panier est dans la barre du bas */
+  }
+
+  .menu-toggle {
+    min-block-size: var(--control-height);
+    padding: 0 var(--space-15);
+    text-transform: uppercase;
+    color: var(--color-text);
+    background-color: var(--color-white);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: 0;
+  }
+
+  .menu-toggle::before,
+  .menu-toggle::after {
+    display: none;
+  }
+
+  .main-navigation.toggled .handheld-navigation {
+    position: absolute;
+    inset-inline: 0;
+    z-index: 10;
+    padding: var(--space-15) var(--page-gutter-mobile);
+    background-color: var(--color-white);
+    border-block-end: var(--border-width) solid var(--color-border);
+  }
+
+  .main-navigation .handheld-navigation ul.menu {
+    display: grid;
+    gap: var(--space-15);
+  }
+}
+
+.storefront-handheld-footer-bar {
+  background-color: var(--color-white);
+  border-block-start: var(--border-width) solid var(--color-border);
+}
+
+.storefront-handheld-footer-bar ul li > a {
+  color: var(--color-text);
+  background-color: var(--color-white);
+  border-top: 0;
+}
+
+/* ---- Fil d'Ariane ---- */
+.storefront-breadcrumb {
+  margin: 0;
+  padding: var(--space-15) 0;
+}
+
+.woocommerce-breadcrumb {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--color-text-muted);
+}
+
+.woocommerce-breadcrumb a {
+  color: var(--color-text-muted);
+  text-decoration: none;
+}
+
+.woocommerce-breadcrumb a:first-of-type::before {
+  display: none; /* icône maison de Storefront */
+}
+
+.woocommerce-breadcrumb a:hover {
+  color: var(--color-white);
+  background-color: var(--color-black);
+}
+
+.site-content {
+  padding-block: 0 var(--space-65);
+  background-color: var(--color-white);
+}
+
+/* ---- Filet de points ---- */
+.gb-divider {
+  block-size: 0;
+  margin: 0;
+  border: 0;
+  border-block-start: var(--border-width-strong) dotted var(--color-black);
+  background: none;
+}
+
+/* ---- Pied de page ---- */
+.site-footer {
+  padding: 0;
+  color: var(--color-text);
+  background-color: var(--color-white);
+  border: 0;
+}
+
+.site-footer .col-full {
+  padding-inline: 0;
+}
+
+.gb-footer {
+  display: grid;
+  gap: var(--space-45);
+  padding-block-end: var(--space-45);
+}
+
+.gb-footer__logo {
+  display: block;
+  inline-size: min(27.0625rem, 80%);
+  block-size: auto;
+  margin-inline: auto;
+}
+
+.gb-footer__columns,
+.gb-footer__legal {
+  padding-inline: var(--page-gutter-mobile);
+}
+
+.gb-footer__columns {
+  display: grid;
+  gap: var(--space-45);
+}
+
+.gb-footer__title {
+  margin: 0;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+}
+
+.gb-footer__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gb-footer__text {
+  margin: 0;
+  font-style: normal;
+}
+
+.gb-footer__legal {
+  margin: 0;
+  font-size: 1rem;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 48em) {
+  .gb-footer__columns,
+  .gb-footer__legal {
+    padding-inline: var(--site-gutter);
+  }
+
+  .gb-footer__columns {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .gb-footer__column:last-child {
+    max-inline-size: 22.5rem;
+  }
+}
+
+/* Barre du bas Storefront : laisse de la place en bas de page sur mobile */
+@media (max-width: 47.99em) {
+  .site-footer {
+    padding-block-end: 4.5rem;
+  }
+}
+
+/* ---- Pages sans filtres : le contenu prend toute la largeur ---- */
+body:not(.woocommerce-shop):not(.tax-product_cat):not(.tax-product_tag) .site-content .widget-area {
+  display: none;
+}
+
+.site-content .content-area {
+  float: none;
+  inline-size: 100%;
+  margin: 0;
+}
+
+@media (min-width: 64em) {
+  .left-sidebar.woocommerce-shop .site-content .content-area,
+  .left-sidebar.tax-product_cat .site-content .content-area,
+  .left-sidebar.tax-product_tag .site-content .content-area {
+    inline-size: auto;
+  }
+}

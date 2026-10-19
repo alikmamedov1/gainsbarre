@@ -1,0 +1,89 @@
+/* ==========================================================================
+   base.css — Police et styles de base (surcharge de Storefront)
+   Pas de @layer ici : les styles de Storefront ne sont pas dans une couche,
+   et une règle hors couche l'emporte toujours sur une règle en couche.
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+html {
+  font-size: 100%;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-base);
+  color: var(--color-text);
+}
+
+body {
+  background-color: var(--color-background);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-base);
+  color: var(--color-text);
+}
+
+h1 { font-size: var(--font-size-h1-mobile); }
+h2 { font-size: var(--font-size-h2); }
+h3 { font-size: var(--font-size-h3); }
+
+@media (min-width: 48em) {
+  h1 { font-size: var(--font-size-h1); }
+}
+
+strong, b {
+  font-weight: var(--font-weight-bold);
+}
+
+a,
+a:visited {
+  color: var(--color-text);
+}
+
+a:hover,
+a:focus {
+  color: var(--color-text);
+}
+
+/* Focus : Storefront dessine un contour violet au clic (a:focus). On le retire, puis on ne
+   garde que le contour noir du Design System, visible à la navigation au clavier. */
+a:focus,
+input:focus,
+textarea:focus,
+button:focus,
+select:focus {
+  outline: none;
+}
+
+:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+button:focus-visible,
+select:focus-visible {
+  outline: var(--outline-width) solid var(--color-black);
+  outline-offset: var(--outline-offset);
+}
+
+/* Storefront ajoute des filets et des ombres que le design n'utilise pas */
+.site-content,
+.site-header,
+.site-footer {
+  box-shadow: none;
+}
+
+.col-full::before,
+.col-full::after {
+  content: none;
+  display: none;
+}

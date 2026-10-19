@@ -1,0 +1,58 @@
+/* ==========================================================================
+   variables.css — Design tokens (couleurs, typographie, espacements, bordures)
+   Toutes les longueurs sont en rem (1rem = 16px par défaut).
+   ========================================================================== */
+
+:root {
+  /* ---- Couleurs (Design System) ---- */
+  --color-black: #000000;
+  --color-white: #ffffff;
+  --color-grey: #d4d4d4;       /* bordures, éléments désactivés (jamais pour du petit texte) */
+  --color-red: #f43326;        /* pastille de disponibilité (jamais pour du texte) */
+  --color-grey-dark: #6d6d6d;  /* texte secondaire (contraste 5,2:1 sur blanc) */
+
+  /* ---- Rôles de couleur ---- */
+  --color-text: var(--color-black);
+  --color-text-muted: var(--color-grey-dark);
+  --color-background: var(--color-white);
+  --color-border: var(--color-grey);
+
+  /* ---- Typographie ---- */
+  --font-family-base: "Anonymous Pro", "Courier New", monospace;
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+
+  --font-size-h1: 3rem;        /* 48px */
+  --font-size-h2: 2.25rem;     /* 36px */
+  --font-size-h3: 1.5rem;      /* 24px */
+  --font-size-base: 1.25rem;   /* 20px — texte courant, navigation, boutons (mesuré sur les maquettes) */
+  --font-size-h1-mobile: 2.25rem; /* 36px — H1 sur les maquettes mobiles */
+
+  --line-height-tight: 1;
+  --line-height-base: 1.25;
+
+  /* ---- Espacements (échelle du Design System : 10, 15, 25, 30, 45, 50, 65 px) ---- */
+  --space-10: 0.625rem;
+  --space-15: 0.9375rem;
+  --space-25: 1.5625rem;
+  --space-30: 1.875rem;
+  --space-45: 2.8125rem;
+  --space-50: 3.125rem;
+  --space-65: 4.0625rem;
+
+  /* ---- Bordures et focus ---- */
+  --border-width: 0.0625rem;        /* 1px */
+  --border-width-strong: 0.125rem;  /* 2px */
+  --outline-width: 0.125rem;        /* 2px */
+  --outline-offset: 0.125rem;
+
+  /* ---- Dimensions récurrentes (mesurées sur la planche de composants) ---- */
+  --control-height: 3.125rem;       /* 50px : boutons, puces, select, pagination */
+  --card-width: 19.6875rem;         /* 315px */
+  --page-gutter: 5rem;              /* 80px */
+  --page-gutter-mobile: var(--space-25);
+  --site-gutter: 4rem;               /* 64px : marge latérale du site (desktop) */
+  --site-max-width: 90rem;           /* 1440px : largeur des maquettes desktop */
+
+  /* ---- Breakpoint (référence ; les media queries utilisent des em : 48em = 768px) ---- */
+}

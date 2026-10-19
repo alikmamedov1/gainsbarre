@@ -1,0 +1,257 @@
+/* ==========================================================================
+   components.css — Composants du Design System appliqués aux classes WooCommerce
+   Boutons, étiquette de service, champs, pagination, messages
+   ========================================================================== */
+
+/* ---- Survol commun : couleurs inversées ---- */
+.woocommerce-breadcrumb a:hover,
+.woocommerce-tabs ul.tabs li a:hover {
+  color: var(--color-white);
+  background-color: var(--color-black);
+}
+
+/* ---- Bouton (contour fin, survol inversé) ---- */
+.button,
+button.button,
+a.button,
+input.button,
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce input.button,
+.woocommerce #respond input#submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-block-size: var(--control-height);
+  padding: 0 var(--space-25);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-base);
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: var(--color-black);
+  background-color: var(--color-white);
+  background-image: none;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: 0;
+  box-shadow: none;
+  text-shadow: none;
+  cursor: pointer;
+}
+
+.button:hover,
+a.button:hover,
+button.button:hover,
+.woocommerce a.button:hover,
+.woocommerce button.button:hover,
+.woocommerce input.button:hover {
+  color: var(--color-white);
+  background-color: var(--color-black);
+  border-color: var(--color-black);
+}
+
+.button:disabled,
+button.button:disabled,
+.button.disabled,
+.woocommerce button.button:disabled,
+.woocommerce button.button.disabled,
+.woocommerce a.button.disabled {
+  color: var(--color-grey-dark);
+  background-color: var(--color-grey);
+  border-color: var(--color-grey);
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+/* Bouton principal : noir plein (Ajouter au panier sur la fiche produit) */
+.woocommerce button.button.alt,
+.woocommerce a.button.alt,
+.woocommerce input.button.alt,
+.single_add_to_cart_button.button.alt {
+  color: var(--color-white);
+  background-color: var(--color-black);
+  border-color: var(--color-black);
+}
+
+.woocommerce button.button.alt:hover,
+.woocommerce a.button.alt:hover,
+.woocommerce input.button.alt:hover,
+.single_add_to_cart_button.button.alt:hover {
+  color: var(--color-black);
+  background-color: var(--color-white);
+  border-color: var(--color-black);
+}
+
+.woocommerce button.button.alt:disabled,
+.woocommerce button.button.alt.disabled {
+  color: var(--color-grey-dark);
+  background-color: var(--color-grey);
+  border-color: var(--color-grey);
+}
+
+/* Après un ajout au panier : lien « Voir le panier » */
+a.added_to_cart {
+  display: inline-block;
+  margin-block-start: var(--space-10);
+  color: var(--color-text);
+}
+
+/* ---- Étiquette de service : « MIDI », « SOIR » ou « MIDI - SOIR » ---- */
+.gb-tag {
+  position: absolute;
+  inset-block-start: var(--space-10);
+  inset-inline-start: var(--space-10);
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-10);
+  padding: var(--space-10);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-black);
+  background-color: var(--color-white);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.gb-tag::before {
+  content: "";
+  flex: none;
+  inline-size: 0.875rem;
+  block-size: 0.875rem;
+  background-color: var(--color-red);
+  border-radius: 50%;
+}
+
+/* ---- Champs (liste de tri, quantité, recherche) ---- */
+select,
+.woocommerce-ordering select {
+  box-sizing: border-box;
+  block-size: var(--control-height);
+  padding: 0 var(--space-50) 0 var(--space-30);
+  color: var(--color-black);
+  background-color: var(--color-white);
+  background-image: url("../assets/icon-triangle-down.svg");
+  background-repeat: no-repeat;
+  background-position: right var(--space-25) center;
+  background-size: 0.875rem 0.5rem;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: 0;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* Survol : couleurs inversées, triangle blanc (le noir disparaîtrait sur le fond noir) */
+select:hover:not(:disabled),
+.woocommerce-ordering select:hover:not(:disabled),
+.storefront-sorting .woocommerce-ordering select:hover:not(:disabled) {
+  color: var(--color-white);
+  background-color: var(--color-black);
+  background-image: url("../assets/icon-triangle-down-white.svg");
+}
+
+/* La liste déroulante s'ouvre toujours en noir sur blanc, même quand le champ est survolé */
+select option {
+  color: var(--color-black);
+  background-color: var(--color-white);
+}
+
+select:disabled {
+  color: var(--color-grey-dark);
+  background-color: var(--color-grey);
+  cursor: not-allowed;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="search"],
+input[type="password"],
+textarea {
+  box-sizing: border-box;
+  color: var(--color-black);
+  background-color: var(--color-white);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* ---- Pagination ---- */
+.woocommerce-pagination {
+  margin-block-start: var(--space-50);
+  text-align: center;
+}
+
+.woocommerce-pagination ul.page-numbers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-10);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+}
+
+.woocommerce-pagination ul.page-numbers li {
+  margin: 0;
+  border: 0;
+  float: none;
+}
+
+.woocommerce-pagination .page-numbers a,
+.woocommerce-pagination .page-numbers span.page-numbers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  inline-size: var(--control-height);
+  block-size: var(--control-height);
+  padding: 0;
+  font-size: var(--font-size-base);
+  text-decoration: none;
+  color: var(--color-black);
+  background-color: var(--color-white);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.woocommerce-pagination .page-numbers span.current {
+  color: var(--color-white);
+  background-color: var(--color-black);
+  border-color: var(--color-black);
+}
+
+.woocommerce-pagination .page-numbers a:hover {
+  color: var(--color-white);
+  background-color: var(--color-black);
+  border-color: var(--color-black);
+}
+
+/* ---- Messages WooCommerce ---- */
+.woocommerce-message,
+.woocommerce-info,
+.woocommerce-error {
+  color: var(--color-text);
+  background-color: var(--color-white);
+  border: var(--border-width) solid var(--color-border);
+  border-inline-start-width: var(--border-width-strong);
+  border-inline-start-color: var(--color-black);
+}
+
+.woocommerce-message::before,
+.woocommerce-info::before,
+.woocommerce-error::before {
+  display: none;
+}
+
+.woocommerce-message a.button,
+.woocommerce-info a.button {
+  inline-size: auto;
+}
