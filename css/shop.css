@@ -1,0 +1,294 @@
+/* ==========================================================================
+   shop.css — Page « La carte » (boutique) : filtres, tri, grille de produits
+   ========================================================================== */
+
+/* ---- Mise en page : colonne de filtres (310 px) + grille ---- */
+@media (min-width: 64em) {
+  .left-sidebar.woocommerce-shop .site-content > .col-full,
+  .left-sidebar.tax-product_cat .site-content > .col-full,
+  .left-sidebar.tax-product_tag .site-content > .col-full {
+    display: grid;
+    grid-template-columns: 19.375rem minmax(0, 1fr);
+    column-gap: var(--space-65);
+    align-items: start;
+  }
+
+  .left-sidebar.woocommerce-shop .site-content > .col-full > *:not(.content-area):not(.widget-area),
+  .left-sidebar.tax-product_cat .site-content > .col-full > *:not(.content-area):not(.widget-area),
+  .left-sidebar.tax-product_tag .site-content > .col-full > *:not(.content-area):not(.widget-area) {
+    grid-column: 1 / -1;
+  }
+
+  .left-sidebar .site-content .widget-area {
+    grid-column: 1;
+    grid-row: 2;
+    float: none;
+    inline-size: auto;
+    /* démarre à la hauteur de la barre de tri : sous le titre H1 */
+    margin: calc(var(--space-25) + var(--font-size-h1) * var(--line-height-base) + var(--space-30)) 0 0;
+  }
+
+  .left-sidebar .site-content .content-area {
+    grid-column: 2;
+    grid-row: 2;
+    float: none;
+    inline-size: auto;
+    margin: 0;
+  }
+}
+
+.woocommerce-products-header__title,
+.page-title {
+  margin: var(--space-25) 0 var(--space-30);
+  font-size: var(--font-size-h1-mobile);
+  font-weight: var(--font-weight-bold);
+}
+
+@media (min-width: 48em) {
+  .woocommerce-products-header__title,
+  .page-title {
+    font-size: var(--font-size-h1);
+  }
+}
+
+/* ---- Filtres (colonne de gauche) ---- */
+.widget-area .widget {
+  margin: 0 0 var(--space-45);
+  padding: 0;
+  border: 0;
+}
+
+.widget-area .widget-title,
+.widget-area .gamma.widget-title {
+  margin: 0 0 var(--space-15);
+  font-size: 1rem;
+  font-weight: var(--font-weight-regular);
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+
+.widget_product_categories ul,
+.widget_product_tag_cloud .tagcloud {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.widget_product_categories li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-10);
+  padding-block: var(--space-10);
+  border-block-end: var(--border-width-strong) dotted var(--color-black);
+}
+
+.widget_product_categories ul li::before,
+.widget_product_categories ul li.current-cat::before {
+  content: none; /* icône dossier de Storefront */
+  display: none;
+}
+
+.widget_product_categories ul li {
+  padding-inline-start: 0;
+  margin-block-end: 0;
+}
+
+.widget-area .widget a:not(.button),
+.widget_product_categories li a,
+.widget_product_tag_cloud .tagcloud a {
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.widget_product_categories li.current-cat > a {
+  font-weight: var(--font-weight-bold);
+}
+
+/* Survol = couleurs inversées. Le sélecteur répète celui de la règle de couleur
+   ci-dessus (.widget a:not(.button)) pour qu'il l'emporte : sinon texte noir sur fond noir. */
+.widget-area .widget a:not(.button):hover,
+.widget-area .widget a:not(.button):focus-visible,
+.widget_product_categories li a:hover,
+.widget_product_tag_cloud .tagcloud a:hover {
+  color: var(--color-white);
+  background-color: var(--color-black);
+}
+
+.widget_product_categories li .count {
+  color: var(--color-text-muted);
+}
+
+.widget_product_tag_cloud .tagcloud {
+  display: grid;
+}
+
+.widget_product_tag_cloud .tagcloud a {
+  display: block;
+  padding-block: var(--space-10);
+  font-size: var(--font-size-base) !important; /* WordPress impose une taille inline sur le nuage */
+  border-block-end: var(--border-width-strong) dotted var(--color-black);
+}
+
+/* ---- Tri et nombre de résultats ---- */
+.storefront-sorting::before,
+.storefront-sorting::after {
+  content: none; /* « clearfix » de Storefront : deviendrait un élément du flex */
+  display: none;
+}
+
+.storefront-sorting {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end; /* liste de tri à droite, comme sur la maquette */
+  gap: var(--space-15);
+  margin: 0 0 var(--space-30);
+}
+
+.storefront-sorting .woocommerce-result-count,
+.storefront-sorting .woocommerce-ordering {
+  float: none;
+  inline-size: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.storefront-sorting .woocommerce-result-count {
+  flex: 1;
+  font-size: 1rem;
+  text-align: start;
+  color: var(--color-text-muted);
+}
+
+.storefront-sorting .woocommerce-ordering select {
+  inline-size: min(100%, 15.625rem);
+}
+
+@media (max-width: 47.99em) {
+  .storefront-sorting .woocommerce-ordering {
+    inline-size: 100%;
+  }
+
+  .storefront-sorting .woocommerce-ordering select {
+    inline-size: 100%;
+  }
+}
+
+/* La barre de pagination placée au-dessus de la grille fait doublon avec celle du bas */
+.storefront-sorting .woocommerce-pagination {
+  display: none;
+}
+
+/* ---- Grille : 1 colonne mobile, 2 tablette, 3 desktop ---- */
+.site-main ul.products,
+.site-main ul.products[class*="columns-"],
+.woocommerce ul.products {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-45) var(--space-25);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-main ul.products::before,
+.site-main ul.products::after,
+.woocommerce ul.products::before,
+.woocommerce ul.products::after {
+  content: none;
+  display: none;
+}
+
+@media (min-width: 36em) {
+  .site-main ul.products,
+  .site-main ul.products[class*="columns-"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64em) {
+  .site-main ul.products,
+  .site-main ul.products[class*="columns-"] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ---- Carte produit ---- */
+.site-main ul.products li.product,
+.site-main ul.products[class*="columns-"] li.product {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  float: none;
+  inline-size: auto;
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  text-align: start;
+  line-height: var(--line-height-tight);
+}
+
+.site-main ul.products li.product a.woocommerce-LoopProduct-link {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: var(--space-10);
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.site-main ul.products li.product img {
+  box-sizing: border-box;
+  inline-size: 100%;
+  aspect-ratio: 4 / 5;
+  height: auto;
+  margin: 0 0 var(--space-10);
+  object-fit: contain;
+  background-color: var(--color-white);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.site-main ul.products li.product .woocommerce-loop-product__title {
+  margin: 0;
+  padding: 0;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text);
+}
+
+.site-main ul.products li.product a.woocommerce-LoopProduct-link:hover .woocommerce-loop-product__title {
+  text-decoration: underline;
+}
+
+.gb-product-description {
+  margin: 0;
+  color: var(--color-text-muted);
+  line-height: var(--line-height-tight);
+}
+
+.site-main ul.products li.product .price {
+  display: block;
+  margin: auto 0 0; /* aligne les prix et les boutons d'une rangée */
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+}
+
+.site-main ul.products li.product .price del {
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-muted);
+}
+
+.site-main ul.products li.product .price ins {
+  text-decoration: none;
+  background: none;
+}
+
+.site-main ul.products li.product .button {
+  margin-block-start: var(--space-10);
+}
+
+/* Pas de pastille « Promo » violette de Storefront */
+.woocommerce span.onsale {
+  display: none;
+}
