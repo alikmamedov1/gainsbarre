@@ -256,3 +256,34 @@ add_filter( 'woocommerce_get_availability', function ( $disponibilite, $product 
 add_filter( 'woocommerce_placeholder_img_src', function ( $src ) {
 	return is_admin() ? $src : get_stylesheet_directory_uri() . '/assets/photo-a-ajouter.svg';
 } );
+
+/* --------------------------------------------------------------------------
+   8. Informations produit (champs SCF) : Composition, Allergènes, Valeurs nutritionnelles
+   Les champs sont créés par le groupe « Informations produit » (script create-fields-it4.php),
+   affichés sur la fiche produit AVANT le prix (US-4.3), seulement quand ils sont renseignés.
+   -------------------------------------------------------------------------- */
+function gainsbarre_product_info() {
+	if ( ! function_exists( 'get_field' ) ) {
+		return; // Secure Custom Fields désactivé : on n'affiche rien plutôt que de provoquer une erreur.
+	}
+	$produit_id = get_the_ID();
+	$champs     = array(
+		'composition'             => 'Composition',
+		'allergenes'              => 'Allergènes',
+		'valeurs_nutritionnelles' => 'Valeurs nutritionnelles',
+	);
+	$lignes = '';
+	foreach ( $champs as $nom => $libelle ) {
+		$valeur = trim( (string) get_field( $nom, $produit_id, false ) ); // valeur brute, échappée ci-dessous
+		if ( '' === $valeur ) {
+			continue;
+		}
+		$lignes .= '<div class="gb-product-info__row"><dt class="gb-product-info__label">' . esc_html( $libelle ) . '</dt>'
+			. '<dd class="gb-product-info__value">' . nl2br( esc_html( $valeur ) ) . '</dd></div>';
+	}
+	if ( '' !== $lignes ) {
+		echo '<dl class="gb-product-info">' . $lignes . '</dl>'; // $lignes est déjà échappé
+	}
+}
+// Titre = 5, prix = 10 : priorité 8 pour passer entre les deux.
+add_action( 'woocommerce_single_product_summary', 'gainsbarre_product_info', 8 );
