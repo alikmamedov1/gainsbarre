@@ -511,3 +511,55 @@ add_filter( 'woocommerce_my_account_my_orders_actions', function ( $actions ) {
 	}
 	return $actions;
 } );
+
+// 11. E-mails transactionnels
+
+add_filter( 'woocommerce_email_styles', function ( $css ) {
+	$css .= '
+		body, #outer_wrapper, #wrapper, #inner_wrapper { background-color: #ffffff; }
+		body, td, th, p, li, address { font-family: "Anonymous Pro", "Courier New", Courier, monospace; color: #000000; }
+		#template_header_image { padding: 32px 0 8px; text-align: center; }
+		#template_header_image img { width: 360px; max-width: 100%; height: auto; border: 0; }
+		#template_container { background-color: #ffffff; border: 0; border-top: 2px dotted #000000; border-bottom: 2px dotted #000000; box-shadow: none; border-radius: 0; }
+		#template_header { background-color: #ffffff; border: 0; border-radius: 0; }
+		#header_wrapper { padding: 32px 32px 0; }
+		#template_header h1 { color: #000000; font-family: "Anonymous Pro", "Courier New", Courier, monospace; font-size: 28px; font-weight: 400; line-height: 1.2; text-align: left; text-shadow: none; }
+		#body_content { background-color: #ffffff; }
+		#body_content_inner { color: #000000; font-size: 16px; line-height: 1.5; text-align: left; }
+		#body_content h2, #body_content h3 { color: #000000; font-family: "Anonymous Pro", "Courier New", Courier, monospace; font-size: 20px; font-weight: 700; text-align: left; }
+		#template_container *, #template_footer * { font-family: "Anonymous Pro", "Courier New", Courier, monospace; }
+		#body_content table.td, #body_content .td { border: 0; border-top: 1px solid #000000; color: #000000; }
+		#body_content table.td th, #body_content table.td td { border: 0; border-top: 1px solid #d4d4d4; color: #000000; padding: 12px 0; }
+		#body_content a, #template_footer a { color: #000000; text-decoration: underline; }
+		#template_footer #credit, #template_footer #credit p { color: #6d6d6d; font-size: 14px; text-align: center; }
+		#gb-legal p { color: #6d6d6d; font-size: 12px; text-align: center; text-transform: uppercase; }
+		#body_content .email-order-details tbody tr:last-child td { border-bottom: 0; padding-bottom: 12px; }
+		#body_content .email-order-details .order-totals-last td, #body_content .email-order-details .order-totals-last th { border-bottom: 0; }
+		.gb-email-pickup { margin: 24px 0; padding: 16px 0 0; border-top: 2px dotted #000000; }
+		.gb-email-pickup h2 { margin: 0 0 8px; }
+		.gb-email-pickup p { margin: 0 0 8px; }
+	';
+	return $css;
+} );
+
+add_filter( 'woocommerce_email_body_display_section_divider', '__return_false' );
+
+add_action(
+	'woocommerce_email_after_order_table',
+	function ( $commande, $envoi_admin, $texte_brut, $email ) {
+		$destinataires = array( 'customer_on_hold_order', 'customer_processing_order', 'customer_completed_order' );
+		if ( $envoi_admin || ! $email || ! in_array( $email->id, $destinataires, true ) ) {
+			return;
+		}
+		if ( ! $commande->has_shipping_method( 'local_pickup' ) && ! $commande->has_shipping_method( 'pickup_location' ) ) {
+			return;
+		}
+		if ( $texte_brut ) {
+			echo "\n" . wp_strip_all_tags( gainsbarre_pickup_instructions_text() ) . "\n";
+			return;
+		}
+		echo '<div class="gb-email-pickup"><h2>Instructions pour le retrait</h2>' . wp_kses_post( wpautop( gainsbarre_pickup_instructions_text() ) ) . '</div>';
+	},
+	10,
+	4
+);
