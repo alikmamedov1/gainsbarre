@@ -30,7 +30,8 @@
 }
 
 .site-header::before {
-  content: none; /* supprime le « clearfix » de Storefront qui occuperait une cellule de la grille */
+  /* supprime le « clearfix » de Storefront qui occuperait une cellule de la grille */
+  content: none;
   display: none;
 }
 
@@ -79,7 +80,8 @@
 /* Le lien a exactement la taille du logo : le contour de focus l'entoure en entier */
 .site-header .site-branding .gb-logo {
   display: block;
-  inline-size: 15.75rem;  /* logo 1 « petit » du Design System : 252 px */
+  /* logo 1 « petit » du Design System : 252 px */
+  inline-size: 15.75rem;
   max-inline-size: 100%;
   outline-offset: 0.25rem;
 }
@@ -91,7 +93,8 @@
 .site-header .site-branding .gb-logo__image {
   display: block;
   inline-size: 100%;
-  max-inline-size: none;  /* Storefront limite les images du logo à 230 px */
+  /* Storefront limite les images du logo à 230 px */
+  max-inline-size: none;
   block-size: auto;
 }
 
@@ -107,7 +110,8 @@
   flex: 0 0 auto;
   inline-size: auto;
   max-inline-size: none;
-  margin: 0; /* navigation et panier groupés à droite par justify-content: flex-end du parent */
+  /* navigation et panier groupés à droite par justify-content: flex-end du parent */
+  margin: 0;
   clear: none;
 }
 
@@ -250,7 +254,8 @@
   }
 
   .site-header .site-header-cart {
-    display: none; /* le panier est dans la barre du bas */
+    /* le panier est dans la barre du bas */
+    display: none;
   }
 
   .menu-toggle {
@@ -312,7 +317,8 @@
 }
 
 .woocommerce-breadcrumb a:first-of-type::before {
-  display: none; /* icône maison de Storefront */
+  /* icône maison de Storefront */
+  display: none;
 }
 
 .woocommerce-breadcrumb a:hover {

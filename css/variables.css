@@ -7,9 +7,9 @@
   /* ---- Couleurs (Design System) ---- */
   --color-black: #000000;
   --color-white: #ffffff;
-  --color-grey: #d4d4d4;       /* bordures, éléments désactivés (jamais pour du petit texte) */
-  --color-red: #f43326;        /* pastille de disponibilité (jamais pour du texte) */
-  --color-grey-dark: #6d6d6d;  /* texte secondaire (contraste 5,2:1 sur blanc) */
+  --color-grey: #d4d4d4;
+  --color-red: #f43326;
+  --color-grey-dark: #6d6d6d;
 
   /* ---- Rôles de couleur ---- */
   --color-text: var(--color-black);
@@ -22,11 +22,11 @@
   --font-weight-regular: 400;
   --font-weight-bold: 700;
 
-  --font-size-h1: 3rem;        /* 48px */
-  --font-size-h2: 2.25rem;     /* 36px */
-  --font-size-h3: 1.5rem;      /* 24px */
-  --font-size-base: 1.25rem;   /* 20px — texte courant, navigation, boutons (mesuré sur les maquettes) */
-  --font-size-h1-mobile: 2.25rem; /* 36px — H1 sur les maquettes mobiles */
+  --font-size-h1: 3rem;
+  --font-size-h2: 2.25rem;
+  --font-size-h3: 1.5rem;
+  --font-size-base: 1.25rem;
+  --font-size-h1-mobile: 2.25rem;
 
   --line-height-tight: 1;
   --line-height-base: 1.25;
@@ -41,18 +41,18 @@
   --space-65: 4.0625rem;
 
   /* ---- Bordures et focus ---- */
-  --border-width: 0.0625rem;        /* 1px */
-  --border-width-strong: 0.125rem;  /* 2px */
-  --outline-width: 0.125rem;        /* 2px */
+  --border-width: 0.0625rem;
+  --border-width-strong: 0.125rem;
+  --outline-width: 0.125rem;
   --outline-offset: 0.125rem;
 
   /* ---- Dimensions récurrentes (mesurées sur la planche de composants) ---- */
-  --control-height: 3.125rem;       /* 50px : boutons, puces, select, pagination */
-  --card-width: 19.6875rem;         /* 315px */
-  --page-gutter: 5rem;              /* 80px */
+  --control-height: 3.125rem;
+  --card-width: 19.6875rem;
+  --page-gutter: 5rem;
   --page-gutter-mobile: var(--space-25);
-  --site-gutter: 4rem;               /* 64px : marge latérale du site (desktop) */
-  --site-max-width: 90rem;           /* 1440px : largeur des maquettes desktop */
+  --site-gutter: 4rem;
+  --site-max-width: 90rem;
 
   /* ---- Breakpoint (référence ; les media queries utilisent des em : 48em = 768px) ---- */
 }

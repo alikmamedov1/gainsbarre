@@ -17,11 +17,15 @@ add_action( 'wp_enqueue_scripts', function () {
 	wp_dequeue_style( 'source-sans-pro' );
 
 	$fichiers = array( 'variables', 'base', 'layout', 'components', 'shop', 'product' );
+	if ( function_exists( 'is_account_page' ) && is_account_page() ) {
+		$fichiers[] = 'account';
+	}
 	$parent   = 'storefront-style';
 	foreach ( $fichiers as $fichier ) {
 		$handle = 'gainsbarre-' . $fichier;
 		wp_enqueue_style( $handle, $uri . '/css/' . $fichier . '.css', array( $parent ), $version );
-		$parent = $handle; // chaque fichier dépend du précédent : ordre garanti
+		// chaque fichier dépend du précédent : ordre garanti
+		$parent = $handle;
 	}
 
 	if ( function_exists( 'is_product' ) && is_product() ) {
@@ -215,7 +219,8 @@ function gainsbarre_stock_tag_html( $product ) {
 function gainsbarre_stock_tag() {
 	global $product;
 	if ( $product ) {
-		echo gainsbarre_stock_tag_html( $product ); // phpcs:ignore WordPress.Security.EscapeOutput -- déjà échappé
+		// phpcs:ignore WordPress.Security.EscapeOutput -- déjà échappé
+		echo gainsbarre_stock_tag_html( $product );
 	}
 }
 
@@ -344,7 +349,8 @@ add_filter( 'woocommerce_placeholder_img_src', function ( $src ) {
    -------------------------------------------------------------------------- */
 function gainsbarre_product_info() {
 	if ( ! function_exists( 'get_field' ) ) {
-		return; // Secure Custom Fields désactivé : on n'affiche rien plutôt que de provoquer une erreur.
+		// Secure Custom Fields désactivé : on n'affiche rien plutôt que de provoquer une erreur.
+		return;
 	}
 	$produit_id = get_the_ID();
 	$champs     = array(
@@ -354,7 +360,8 @@ function gainsbarre_product_info() {
 	);
 	$lignes = '';
 	foreach ( $champs as $nom => $libelle ) {
-		$valeur = trim( (string) get_field( $nom, $produit_id, false ) ); // valeur brute, échappée ci-dessous
+		// valeur brute, échappée ci-dessous
+		$valeur = trim( (string) get_field( $nom, $produit_id, false ) );
 		if ( '' === $valeur ) {
 			continue;
 		}
@@ -362,7 +369,8 @@ function gainsbarre_product_info() {
 			. '<dd class="gb-product-info__value">' . nl2br( esc_html( $valeur ) ) . '</dd></div>';
 	}
 	if ( '' !== $lignes ) {
-		echo '<dl class="gb-product-info">' . $lignes . '</dl>'; // $lignes est déjà échappé
+		// $lignes est déjà échappé
+		echo '<dl class="gb-product-info">' . $lignes . '</dl>';
 	}
 }
 // Titre = 5, prix = 10 : priorité 8 pour passer entre les deux.
@@ -454,3 +462,52 @@ add_filter( 'render_block_woocommerce/checkout', function ( $contenu ) {
 	}
 	return $contenu;
 }, 20 );
+
+/* --------------------------------------------------------------------------
+   10. Compte client (Mon compte) : menu, titres et libellés
+   Les formulaires de connexion et d'inscription sont dans woocommerce/myaccount/form-login.php.
+   -------------------------------------------------------------------------- */
+add_filter( 'woocommerce_account_menu_items', function ( $items ) {
+	unset( $items['downloads'] );
+	return $items;
+} );
+
+add_filter( 'woocommerce_customer_email_verification_should_show_prompt', '__return_false' );
+
+add_filter(
+	'gettext_with_context',
+	function ( $traduction, $texte, $contexte, $domaine ) {
+		if ( 'woocommerce' === $domaine && 'hash before order number' === $contexte ) {
+			return '#';
+		}
+		return $traduction;
+	},
+	10,
+	4
+);
+
+add_filter( 'woocommerce_endpoint_orders_title', function () {
+	return 'Mes commandes';
+} );
+
+add_filter( 'the_title', function ( $titre, $id = 0 ) {
+	if ( function_exists( 'is_account_page' ) && is_account_page() && ! is_user_logged_in()
+		&& ! is_wc_endpoint_url() && in_the_loop() && is_main_query() && get_the_ID() === (int) $id ) {
+		return 'Connexion ou inscription';
+	}
+	return $titre;
+}, 10, 2 );
+
+add_filter( 'woocommerce_my_account_my_orders_actions', function ( $actions ) {
+	$libelles = array(
+		'view'   => 'Voir',
+		'pay'    => 'Payer',
+		'cancel' => 'Annuler',
+	);
+	foreach ( $libelles as $cle => $libelle ) {
+		if ( isset( $actions[ $cle ] ) ) {
+			$actions[ $cle ]['name'] = $libelle;
+		}
+	}
+	return $actions;
+} );

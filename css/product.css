@@ -196,7 +196,8 @@
 }
 
 .single-product div.product .product_meta .tagged_as {
-  display: none; /* les étiquettes midi / soir sont déjà affichées sur la photo */
+  /* les étiquettes midi / soir sont déjà affichées sur la photo */
+  display: none;
 }
 
 /* ---- Onglets (Description, Informations complémentaires, Avis) ---- */
@@ -268,7 +269,8 @@
 }
 
 .single-product .woocommerce-tabs .panel h2:first-child {
-  display: none; /* le titre « Description » répète l'onglet */
+  /* le titre « Description » répète l'onglet */
+  display: none;
 }
 
 /* ---- Produits associés : « Vous aimerez aussi » ---- */
@@ -364,7 +366,8 @@
 
 .single-product form.cart table.variations select {
   inline-size: 100%;
-  max-inline-size: none; /* Storefront limite la liste à 70 % */
+  /* Storefront limite la liste à 70 % */
+  max-inline-size: none;
   margin: 0;
   font-weight: var(--font-weight-bold);
   border-color: var(--color-black);
@@ -442,7 +445,8 @@
 /* Quantité + bouton dans le formulaire des variantes */
 .single-product div.product .variations_button::before,
 .single-product div.product .variations_button::after {
-  content: none; /* « clearfix » de Storefront : deviendrait un élément du flex */
+  /* « clearfix » de Storefront : deviendrait un élément du flex */
+  content: none;
   display: none;
 }
 
@@ -466,7 +470,8 @@
 
 /* ---- Informations produit (Composition, Allergènes…) : libellé à gauche, valeur à droite ---- */
 .single-product .summary .gb-product-info {
-  margin: 0; /* le filet au-dessus du prix ferme le bloc */
+  /* le filet au-dessus du prix ferme le bloc */
+  margin: 0;
 }
 
 .single-product .summary .gb-product-info__row {

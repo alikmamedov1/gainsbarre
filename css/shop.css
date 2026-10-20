@@ -84,7 +84,8 @@
 
 .widget_product_categories ul li::before,
 .widget_product_categories ul li.current-cat::before {
-  content: none; /* icône dossier de Storefront */
+  /* icône dossier de Storefront */
+  content: none;
   display: none;
 }
 
@@ -125,14 +126,16 @@
 .widget_product_tag_cloud .tagcloud a {
   display: block;
   padding-block: var(--space-10);
-  font-size: var(--font-size-base) !important; /* WordPress impose une taille inline sur le nuage */
+  /* WordPress impose une taille inline sur le nuage */
+  font-size: var(--font-size-base) !important;
   border-block-end: var(--border-width-strong) dotted var(--color-black);
 }
 
 /* ---- Tri et nombre de résultats ---- */
 .storefront-sorting::before,
 .storefront-sorting::after {
-  content: none; /* « clearfix » de Storefront : deviendrait un élément du flex */
+  /* « clearfix » de Storefront : deviendrait un élément du flex */
+  content: none;
   display: none;
 }
 
@@ -140,7 +143,8 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-end; /* liste de tri à droite, comme sur la maquette */
+  /* liste de tri à droite, comme sur la maquette */
+  justify-content: flex-end;
   gap: var(--space-15);
   margin: 0 0 var(--space-30);
 }
@@ -272,7 +276,8 @@
 
 .site-main ul.products li.product .price {
   display: block;
-  margin: auto 0 0; /* aligne les prix et les boutons d'une rangée */
+  /* aligne les prix et les boutons d'une rangée */
+  margin: auto 0 0;
   font-weight: var(--font-weight-bold);
   color: var(--color-text);
 }
