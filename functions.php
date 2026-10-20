@@ -563,3 +563,23 @@ add_action(
 	10,
 	4
 );
+
+// 12. Commandes : virement pour la livraison, annulation par le client
+
+add_filter( 'woocommerce_available_payment_gateways', function ( $moyens ) {
+	if ( ! function_exists( 'WC' ) || ! WC()->session ) {
+		return $moyens;
+	}
+	$modes = (array) WC()->session->get( 'chosen_shipping_methods', array() );
+	foreach ( $modes as $mode ) {
+		if ( 0 === strpos( (string) $mode, 'local_pickup' ) || 0 === strpos( (string) $mode, 'pickup_location' ) ) {
+			unset( $moyens['bacs'] );
+			break;
+		}
+	}
+	return $moyens;
+} );
+
+add_filter( 'woocommerce_valid_order_statuses_for_cancel', function ( $statuts ) {
+	return array_unique( array_merge( $statuts, array( 'on-hold', 'processing' ) ) );
+} );
