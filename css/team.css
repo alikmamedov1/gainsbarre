@@ -1,0 +1,161 @@
+/* ==========================================================================
+   team.css — Équipe : liste des membres et page d'un membre
+   Chargé seulement sur les pages du type de contenu « equipe ».
+   ========================================================================== */
+
+/* ---- Photo : portrait 4/5, gris « Photo à ajouter » si absent ---- */
+.gb-team__photo {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background-color: var(--color-white);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.gb-team__photo img {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+.gb-team__photo--empty {
+  background-image: url("../assets/photo-a-ajouter.svg");
+  background-position: center;
+  background-size: cover;
+}
+
+/* ---- Liste ---- */
+.gb-team__intro {
+  margin-block-end: var(--space-45);
+}
+
+.gb-team__intro p {
+  max-inline-size: 40rem;
+  margin: var(--space-15) 0 0;
+}
+
+.gb-team__grid {
+  display: grid;
+  gap: var(--space-45) var(--space-25);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 48em) {
+  .gb-team__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.gb-team__item {
+  margin: 0;
+}
+
+.gb-team__item a {
+  display: block;
+  text-decoration: none;
+  color: var(--color-black);
+}
+
+.gb-team__name {
+  margin: var(--space-15) 0 0;
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-bold);
+}
+
+.gb-team__item a:hover .gb-team__name {
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
+.gb-team__role,
+.gb-member__role {
+  margin: 0.125rem 0 0;
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-grey-dark);
+}
+
+/* ---- Page d'un membre ---- */
+.gb-member {
+  display: grid;
+  gap: var(--space-25);
+  align-items: start;
+}
+
+@media (min-width: 48em) {
+  .gb-member {
+    grid-template-columns: 5fr 7fr;
+    column-gap: var(--space-65);
+  }
+}
+
+.gb-member__back {
+  display: inline-block;
+  margin-block-end: var(--space-25);
+  font-size: 0.875rem;
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
+.gb-member__role {
+  margin-block-end: var(--space-25);
+}
+
+.gb-member__text {
+  max-inline-size: 35rem;
+}
+
+.gb-member__text p {
+  margin: 0 0 var(--space-15);
+}
+
+.gb-member__facts {
+  max-inline-size: 35rem;
+  margin: var(--space-30) 0;
+  border-block-start: var(--border-width-strong) dotted var(--color-black);
+}
+
+.gb-member__facts div {
+  display: grid;
+  grid-template-columns: 11.25rem 1fr;
+  gap: var(--space-15);
+  padding: var(--space-15) 0;
+  border-block-end: var(--border-width-strong) dotted var(--color-black);
+}
+
+.gb-member__facts dt {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  color: var(--color-grey-dark);
+}
+
+.gb-member__facts dd {
+  margin: 0;
+}
+
+.gb-member .gb-member__cta {
+  inline-size: 20rem;
+  max-inline-size: 100%;
+  color: var(--color-white);
+  background-color: var(--color-black);
+  border-color: var(--color-black);
+}
+
+.gb-member .gb-member__cta:hover {
+  color: var(--color-black);
+  background-color: var(--color-white);
+}
+
+@media (max-width: 47.99em) {
+  .gb-member__facts div {
+    grid-template-columns: 8rem 1fr;
+  }
+
+  .gb-member .gb-member__cta {
+    inline-size: 100%;
+  }
+}

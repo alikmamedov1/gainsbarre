@@ -20,6 +20,9 @@ add_action( 'wp_enqueue_scripts', function () {
 	if ( function_exists( 'is_account_page' ) && is_account_page() ) {
 		$fichiers[] = 'account';
 	}
+	if ( is_post_type_archive( 'equipe' ) || is_singular( 'equipe' ) ) {
+		$fichiers[] = 'team';
+	}
 	$parent   = 'storefront-style';
 	foreach ( $fichiers as $fichier ) {
 		$handle = 'gainsbarre-' . $fichier;
@@ -583,3 +586,109 @@ add_filter( 'woocommerce_available_payment_gateways', function ( $moyens ) {
 add_filter( 'woocommerce_valid_order_statuses_for_cancel', function ( $statuts ) {
 	return array_unique( array_merge( $statuts, array( 'on-hold', 'processing' ) ) );
 } );
+
+
+// 13. Équipe : type de contenu, champs du profil et menu
+
+add_action( 'init', function () {
+	register_post_type(
+		'equipe',
+		array(
+			'labels'       => array(
+				'name'               => 'Équipe',
+				'singular_name'      => 'Équipe',
+				'add_new'            => 'Ajouter un membre',
+				'add_new_item'       => 'Ajouter un membre de l\'équipe',
+				'edit_item'          => 'Modifier le membre',
+				'new_item'           => 'Nouveau membre',
+				'view_item'          => 'Voir le profil',
+				'search_items'       => 'Rechercher un membre',
+				'not_found'          => 'Aucun membre trouvé',
+				'not_found_in_trash' => 'Aucun membre dans la corbeille',
+				'all_items'          => 'Tous les membres',
+				'menu_name'          => 'Équipe',
+			),
+			'public'       => true,
+			'has_archive'  => 'equipe',
+			'rewrite'      => array( 'slug' => 'equipe', 'with_front' => false ),
+			'menu_icon'    => 'dashicons-groups',
+			'menu_position' => 26,
+			'supports'     => array( 'title', 'editor', 'thumbnail', 'page-attributes' ),
+			'show_in_rest' => true,
+		)
+	);
+} );
+
+add_action( 'acf/init', function () {
+	if ( ! function_exists( 'acf_add_local_field_group' ) ) {
+		return;
+	}
+	acf_add_local_field_group(
+		array(
+			'key'      => 'group_gb_equipe',
+			'title'    => 'Profil du membre',
+			'fields'   => array(
+				array(
+					'key'          => 'field_gb_equipe_poste',
+					'label'        => 'Poste',
+					'name'         => 'equipe_poste',
+					'type'         => 'text',
+					'instructions' => 'Par exemple : Barman, Sommelière.',
+				),
+				array(
+					'key'          => 'field_gb_equipe_depuis',
+					'label'        => 'Au Gainsbarre depuis',
+					'name'         => 'equipe_depuis',
+					'type'         => 'text',
+					'instructions' => 'Année d\'arrivée.',
+				),
+				array(
+					'key'          => 'field_gb_equipe_specialites',
+					'label'        => 'Spécialités',
+					'name'         => 'equipe_specialites',
+					'type'         => 'text',
+					'instructions' => 'Séparées par des virgules.',
+				),
+			),
+			'location' => array(
+				array(
+					array(
+						'param'    => 'post_type',
+						'operator' => '==',
+						'value'    => 'equipe',
+					),
+				),
+			),
+		)
+	);
+} );
+
+add_action( 'pre_get_posts', function ( $requete ) {
+	if ( ! is_admin() && $requete->is_main_query() && $requete->is_post_type_archive( 'equipe' ) ) {
+		$requete->set( 'orderby', array( 'menu_order' => 'ASC', 'date' => 'ASC' ) );
+		$requete->set( 'posts_per_page', 24 );
+	}
+} );
+
+add_filter( 'enter_title_here', function ( $texte, $post ) {
+	return 'equipe' === $post->post_type ? 'Prénom et nom' : $texte;
+}, 10, 2 );
+
+add_action( 'add_meta_boxes_equipe', function () {
+	add_meta_box(
+		'gainsbarre-equipe-aide',
+		'Comment remplir le profil',
+		function () {
+			echo '<p>Titre : prénom et nom. Éditeur : présentation du membre (un paragraphe par idée). Image à la une : portrait de 800 × 1000 px. Poste, année et spécialités : champs ci-dessous.</p>';
+		},
+		'equipe',
+		'side'
+	);
+} );
+
+function gainsbarre_equipe_photo( $id, $taille = 'large' ) {
+	if ( has_post_thumbnail( $id ) ) {
+		return '<div class="gb-team__photo">' . get_the_post_thumbnail( $id, $taille ) . '</div>';
+	}
+	return '<div class="gb-team__photo gb-team__photo--empty" role="img" aria-label="Photo à ajouter"></div>';
+}
