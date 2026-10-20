@@ -296,3 +296,33 @@ textarea {
 .woocommerce-info a.button {
   inline-size: auto;
 }
+
+/* ---- Commande : choix « Livraison en France » / « Retrait en boutique » (bloc checkout) ---- */
+.wc-block-checkout__shipping-method .wc-block-checkout__shipping-method-container {
+  gap: var(--space-10);
+  padding: 0;
+  background-color: transparent;
+  border-radius: 0;
+}
+
+.wc-block-checkout__shipping-method .wc-block-checkout__shipping-method-option {
+  box-sizing: border-box;
+  min-block-size: var(--control-height);
+  padding: var(--space-10) var(--space-30);
+  color: var(--color-black);
+  background-color: var(--color-white);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: 0;
+}
+
+.wc-block-checkout__shipping-method .wc-block-checkout__shipping-method-option.wc-block-checkout__shipping-method-option--selected {
+  border: var(--border-width-strong) solid var(--color-black);
+  background-color: var(--color-white);
+}
+
+.wc-block-checkout__shipping-method .wc-block-checkout__shipping-method-option:hover,
+.wc-block-checkout__shipping-method .wc-block-checkout__shipping-method-option:focus-within {
+  color: var(--color-white);
+  background-color: var(--color-black);
+  border-color: var(--color-black);
+}
