@@ -345,3 +345,36 @@ textarea {
 .wc-block-checkout:has(.wc-block-checkout__shipping-method-option:first-child.wc-block-checkout__shipping-method-option--selected) .gb-pickup-instructions {
   display: none;
 }
+
+/* ---- Codes promotionnels (panier et commande) ---- */
+.wc-block-components-totals-coupon__button.wc-block-components-button:not(.is-link) {
+  color: var(--color-white);
+  background-color: var(--color-black);
+  border: var(--border-width) solid var(--color-black);
+  border-radius: 0;
+}
+
+.wc-block-components-totals-coupon__button.wc-block-components-button:not(.is-link):hover {
+  color: var(--color-black);
+  background-color: var(--color-white);
+}
+
+.wc-block-components-totals-coupon__form .wc-block-components-text-input input {
+  border-radius: 0;
+}
+
+.wc-block-components-validation-error,
+.wc-block-components-validation-error p {
+  color: var(--color-red);
+}
+
+.wc-block-components-chip.wc-block-components-chip--radius-large,
+.wc-block-components-chip {
+  border-radius: 0;
+  border: var(--border-width) solid var(--color-black);
+  background-color: var(--color-white);
+}
+
+.wc-block-components-totals-discount .wc-block-components-totals-item__value {
+  color: var(--color-red);
+}
