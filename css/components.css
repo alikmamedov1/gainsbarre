@@ -326,3 +326,22 @@ textarea {
   background-color: var(--color-black);
   border-color: var(--color-black);
 }
+
+/* ---- Commande : « Instructions pour le retrait » (masqué quand le client choisit la livraison) ---- */
+.gb-pickup-instructions .wc-block-components-checkout-step__content {
+  margin-block-start: var(--space-10);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.gb-pickup-instructions .wc-block-components-checkout-step__content p {
+  margin: 0 0 var(--space-10);
+}
+
+.gb-pickup-instructions .wc-block-components-checkout-step__content p:last-child {
+  margin-bottom: 0;
+}
+
+.wc-block-checkout:has(.wc-block-checkout__shipping-method-option:first-child.wc-block-checkout__shipping-method-option--selected) .gb-pickup-instructions {
+  display: none;
+}

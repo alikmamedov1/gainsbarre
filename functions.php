@@ -367,3 +367,90 @@ function gainsbarre_product_info() {
 }
 // Titre = 5, prix = 10 : priorité 8 pour passer entre les deux.
 add_action( 'woocommerce_single_product_summary', 'gainsbarre_product_info', 8 );
+
+/* --------------------------------------------------------------------------
+   9. Instructions pour le retrait : texte modifiable dans le back office (US-6.1),
+   affiché dans le formulaire de commande (US-6.2).
+   Réglage : menu WooCommerce > Instructions de retrait (option gainsbarre_pickup_instructions).
+   -------------------------------------------------------------------------- */
+function gainsbarre_pickup_instructions_default() {
+	return 'Retrait gratuit au 14 rue de Verneuil, 75007 Paris. Présentez votre numéro de commande au comptoir. Une pièce d’identité est demandée pour les boissons alcoolisées (18 ans et plus).';
+}
+
+function gainsbarre_pickup_instructions_text() {
+	$texte = trim( (string) get_option( 'gainsbarre_pickup_instructions', '' ) );
+	return '' === $texte ? gainsbarre_pickup_instructions_default() : $texte;
+}
+
+// Back office : page de réglage sous le menu WooCommerce.
+add_action( 'admin_menu', function () {
+	add_submenu_page(
+		'woocommerce',
+		'Instructions pour le retrait',
+		'Instructions de retrait',
+		'manage_woocommerce',
+		'gainsbarre-retrait',
+		'gainsbarre_pickup_instructions_page'
+	);
+} );
+
+add_action( 'admin_init', function () {
+	register_setting(
+		'gainsbarre_retrait',
+		'gainsbarre_pickup_instructions',
+		array(
+			'type'              => 'string',
+			'sanitize_callback' => 'wp_kses_post',
+			'default'           => '',
+		)
+	);
+} );
+
+function gainsbarre_pickup_instructions_page() {
+	if ( ! current_user_can( 'manage_woocommerce' ) ) {
+		return;
+	}
+	?>
+	<div class="wrap">
+		<h1>Instructions pour le retrait</h1>
+		<p>Ce texte s’affiche sous le titre « Instructions pour le retrait » dans le formulaire de commande, quand le client choisit le retrait en boutique.</p>
+		<form method="post" action="options.php">
+			<?php settings_fields( 'gainsbarre_retrait' ); ?>
+			<?php
+			wp_editor(
+				gainsbarre_pickup_instructions_text(),
+				'gainsbarre_pickup_instructions',
+				array(
+					'textarea_name' => 'gainsbarre_pickup_instructions',
+					'textarea_rows' => 8,
+					'media_buttons' => false,
+					'teeny'         => true,
+				)
+			);
+			?>
+			<?php submit_button( 'Enregistrer' ); ?>
+		</form>
+	</div>
+	<?php
+}
+
+// Formulaire de commande (bloc WooCommerce) : le texte est inséré après « Lieux de retrait »,
+// avec les classes des étapes du bloc pour garder le même style de titre.
+add_filter( 'render_block_woocommerce/checkout', function ( $contenu ) {
+	$bloc = '<div class="gb-pickup-instructions wc-block-components-checkout-step">'
+		. '<div class="wc-block-components-checkout-step__heading"><h2 class="wc-block-components-title wc-block-components-checkout-step__title">Instructions pour le retrait</h2></div>'
+		. '<div class="wc-block-components-checkout-step__container"><div class="wc-block-components-checkout-step__content">'
+		. wp_kses_post( wpautop( gainsbarre_pickup_instructions_text() ) )
+		. '</div></div></div>';
+
+	// Après « Lieux de retrait » ; à défaut, avant le paiement.
+	$apres = '#(<div[^>]*data-block-name="woocommerce/checkout-pickup-options-block"[^>]*></div>)#';
+	if ( preg_match( $apres, $contenu ) ) {
+		return preg_replace( $apres, '$1' . $bloc, $contenu, 1 );
+	}
+	$avant = '#(<div[^>]*data-block-name="woocommerce/checkout-payment-block"[^>]*></div>)#';
+	if ( preg_match( $avant, $contenu ) ) {
+		return preg_replace( $avant, $bloc . '$1', $contenu, 1 );
+	}
+	return $contenu;
+}, 20 );
