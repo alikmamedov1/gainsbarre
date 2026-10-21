@@ -393,6 +393,18 @@
   font-style: normal;
 }
 
+.site-footer .gb-footer .gb-footer__title a,
+.site-footer .gb-footer .gb-footer__list a {
+  color: var(--color-black);
+  font-weight: inherit;
+  text-decoration: none;
+}
+
+.site-footer .gb-footer .gb-footer__title a:hover,
+.site-footer .gb-footer .gb-footer__list a:hover {
+  text-decoration: underline;
+}
+
 .gb-footer__legal {
   margin: 0;
   font-size: 1rem;

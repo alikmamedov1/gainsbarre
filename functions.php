@@ -99,6 +99,17 @@ add_filter( 'woocommerce_get_price_html', function ( $html ) {
 	return preg_replace( '/' . $sep . '0+(?=(&nbsp;|\s|\x{00A0}|<))/u', '', $html );
 }, 20 );
 
+/**
+ * Lien vers une page du site d'après son identifiant (slug) ; simple texte si la page n'existe pas.
+ */
+function gainsbarre_lien_page( $slug, $texte ) {
+	$page = get_page_by_path( $slug );
+	if ( ! $page || 'publish' !== $page->post_status ) {
+		return esc_html( $texte );
+	}
+	return '<a href="' . esc_url( get_permalink( $page ) ) . '">' . esc_html( $texte ) . '</a>';
+}
+
 function gainsbarre_site_branding() {
 	$assets = get_stylesheet_directory_uri() . '/assets/';
 	?>
@@ -129,10 +140,10 @@ function gainsbarre_footer() {
 				<address class="gb-footer__text">14 rue de Verneuil<br>75007 Paris</address>
 			</div>
 			<div class="gb-footer__column">
-				<h2 class="gb-footer__title">Mentions légales</h2>
+				<h2 class="gb-footer__title"><?php echo wp_kses_post( gainsbarre_lien_page( 'mentions-legales', 'Mentions légales' ) ); ?></h2>
 				<ul class="gb-footer__list">
-					<li>CGV</li>
-					<li>Politique de confidentialité</li>
+					<li><?php echo wp_kses_post( gainsbarre_lien_page( 'conditions-generales-de-vente', 'CGV' ) ); ?></li>
+					<li><?php echo wp_kses_post( gainsbarre_lien_page( 'politique-de-confidentialite', 'Politique de confidentialité' ) ); ?></li>
 				</ul>
 			</div>
 			<div class="gb-footer__column">
@@ -900,3 +911,15 @@ require_once get_stylesheet_directory() . '/inc/filters.php';
 require_once get_stylesheet_directory() . '/inc/shipping.php';
 require_once get_stylesheet_directory() . '/inc/star.php';
 require_once get_stylesheet_directory() . '/inc/slots.php';
+
+/* --------------------------------------------------------------------------
+   Menu mobile : si aucun menu n'est affecté à l'emplacement « mobile » (handheld),
+   Storefront afficherait la liste de toutes les pages du site. On réutilise le menu principal.
+   -------------------------------------------------------------------------- */
+function gainsbarre_menu_mobile_par_defaut( $args ) {
+	if ( isset( $args['theme_location'] ) && 'handheld' === $args['theme_location'] && ! has_nav_menu( 'handheld' ) ) {
+		$args['theme_location'] = 'primary';
+	}
+	return $args;
+}
+add_filter( 'wp_nav_menu_args', 'gainsbarre_menu_mobile_par_defaut' );
