@@ -206,25 +206,13 @@
 .gb-home__hours {
   display: grid;
   grid-template-columns: 8.75rem minmax(0, 1fr);
-  max-inline-size: 40rem;
   margin: var(--space-30) 0 0;
-}
-
-@media (min-width: 48em) {
-  .gb-home__hours {
-    grid-template-columns: 12.5rem minmax(0, 1fr);
-  }
 }
 
 .gb-home__hours dt,
 .gb-home__hours dd {
   margin: 0;
-  padding: var(--space-10) 0;
-  font-size: 0.875rem;
-  border-block-end: var(--border-width-strong) dotted var(--color-black);
-}
-
-.gb-home__hours dt {
+  padding-block: var(--space-10) 0;
   font-weight: var(--font-weight-regular);
 }
 
