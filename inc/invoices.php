@@ -304,11 +304,25 @@ add_action( 'admin_post_gainsbarre_facture', function () {
 	if ( ! $chemin ) {
 		wp_die( 'Aucune facture pour cette commande : elle n\'est pas encore validée.', 'Facture', array( 'response' => 404 ) );
 	}
+	// Réponse binaire « propre » : aucun affichage d'erreur, pas de compression ni de sortie parasite avant le PDF.
+	@ini_set( 'display_errors', '0' );
+	@ini_set( 'zlib.output_compression', 'Off' );
+	if ( function_exists( 'apache_setenv' ) ) {
+		@apache_setenv( 'no-gzip', '1' );
+	}
+	while ( ob_get_level() > 0 ) {
+		ob_end_clean();
+	}
+	$contenu = file_get_contents( $chemin );
+	if ( false === $contenu || 0 !== strpos( $contenu, '%PDF' ) ) {
+		$chemin  = gainsbarre_facture_assurer( $order, true );
+		$contenu = $chemin ? file_get_contents( $chemin ) : '';
+	}
 	nocache_headers();
 	header( 'Content-Type: application/pdf' );
 	header( 'Content-Disposition: attachment; filename="facture-' . $order->get_meta( '_gainsbarre_facture_numero' ) . '.pdf"' );
-	header( 'Content-Length: ' . filesize( $chemin ) );
-	readfile( $chemin );
+	header( 'Content-Transfer-Encoding: binary' );
+	echo $contenu;
 	exit;
 } );
 

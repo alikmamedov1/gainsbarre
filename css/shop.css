@@ -111,10 +111,23 @@
    ci-dessus (.widget a:not(.button)) pour qu'il l'emporte : sinon texte noir sur fond noir. */
 .widget-area .widget a:not(.button):hover,
 .widget-area .widget a:not(.button):focus-visible,
-.widget_product_categories li a:hover,
 .widget_product_tag_cloud .tagcloud a:hover {
   color: var(--color-white);
   background-color: var(--color-black);
+}
+
+/* Listes de filtres : le survol inverse toute la ligne, comme le nuage « Moment » */
+.widget_product_categories li:hover,
+.gb-prix li:hover,
+.widget_layered_nav li:hover,
+.widget_layered_nav_filters li:hover {
+  color: var(--color-white);
+  background-color: var(--color-black);
+}
+
+.widget-area .widget li:hover a,
+.widget-area .widget li:hover .count {
+  color: var(--color-white);
 }
 
 .widget_product_categories li .count {
@@ -352,4 +365,106 @@
 /* ---- Panier : le bloc « Ventes croisées » natif est remplacé par « Pour compléter votre commande » ---- */
 .wc-block-cart .wp-block-woocommerce-product-collection {
   display: none;
+}
+
+/* ---- Filtres par prix et par taille (IT-18) : même liste à filets pointillés que les catégories ---- */
+.gb-prix,
+.widget_layered_nav ul,
+.widget_layered_nav_filters ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gb-prix li,
+.widget_layered_nav ul li,
+.widget_layered_nav_filters ul li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-10);
+  margin: 0;
+  padding: var(--space-10) 0;
+  border-block-end: var(--border-width-strong) dotted var(--color-black);
+}
+
+.gb-prix li::before,
+.widget_layered_nav ul li::before,
+.widget_layered_nav_filters ul li::before {
+  content: none;
+  display: none;
+}
+
+.gb-prix li a,
+.widget_layered_nav ul li a,
+.widget_layered_nav_filters ul li a {
+  flex: 1;
+  text-decoration: none;
+}
+
+.gb-prix li.chosen > a,
+.widget_layered_nav ul li.chosen > a {
+  font-weight: var(--font-weight-bold);
+}
+
+.widget_layered_nav ul li .count {
+  color: var(--color-text-muted);
+}
+
+.widget_layered_nav_filters ul li a::before {
+  content: "× ";
+}
+
+/* ---- Mobile : les filtres passent avant la grille, repliés derrière le bouton « Filtres » ---- */
+.gb-filtres-bouton {
+  display: none;
+}
+
+@media (max-width: 63.99em) {
+  .left-sidebar.woocommerce-shop .site-content > .col-full,
+  .left-sidebar.tax-product_cat .site-content > .col-full,
+  .left-sidebar.tax-gamme .site-content > .col-full,
+  .left-sidebar.tax-product_tag .site-content > .col-full {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .left-sidebar .site-content .widget-area {
+    order: 1;
+    float: none;
+    inline-size: auto;
+    margin: 0 0 var(--space-30);
+  }
+
+  .left-sidebar .site-content .content-area {
+    order: 2;
+  }
+
+  .gb-js .gb-filtres-bouton {
+    order: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    inline-size: 100%;
+    min-block-size: var(--control-height);
+    margin: 0 0 var(--space-15);
+    padding: 0 var(--space-25);
+    font: inherit;
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    color: var(--color-black);
+    background: var(--color-white);
+    border: var(--border-width) solid var(--color-border);
+    border-radius: 0;
+    cursor: pointer;
+  }
+
+  .gb-js .gb-filtres-bouton:hover {
+    color: var(--color-white);
+    background: var(--color-black);
+  }
+
+  .gb-js .widget-area:not(.is-open) {
+    display: none;
+  }
 }

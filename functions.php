@@ -35,6 +35,10 @@ add_action( 'wp_enqueue_scripts', function () {
 		$parent = $handle;
 	}
 
+	if ( function_exists( 'is_shop' ) && ( is_shop() || is_product_taxonomy() ) ) {
+		wp_enqueue_script( 'gainsbarre-filters', $uri . '/js/filters.js', array(), $version, true );
+	}
+
 	if ( function_exists( 'is_product' ) && is_product() ) {
 		wp_enqueue_script( 'gainsbarre-quantity', $uri . '/js/quantity.js', array(), $version, true );
 		wp_enqueue_script( 'gainsbarre-variation', $uri . '/js/variation.js', array( 'jquery' ), $version, true );
@@ -892,3 +896,4 @@ function gainsbarre_frais_page() {
 }
 
 require_once get_stylesheet_directory() . '/inc/invoices.php';
+require_once get_stylesheet_directory() . '/inc/filters.php';
