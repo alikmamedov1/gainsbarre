@@ -17,6 +17,7 @@ add_action( 'wp_enqueue_scripts', function () {
 	wp_dequeue_style( 'source-sans-pro' );
 
 	$fichiers = array( 'variables', 'base', 'layout', 'components', 'shop', 'product' );
+	$fichiers[] = 'reviews';
 	if ( function_exists( 'is_account_page' ) && is_account_page() ) {
 		$fichiers[] = 'account';
 	}
@@ -793,3 +794,22 @@ add_filter( 'render_block_woocommerce/cart', function ( $contenu ) {
 	}
 	return $contenu . gainsbarre_cross_sells_html( WC()->cart->get_cross_sells() );
 }, 20 );
+
+/* --------------------------------------------------------------------------
+   16. Avis clients (IT-14)
+   Avis réservés aux clients ayant acheté le produit : réglage WooCommerce activé par
+   le script create-it14.php. Gabarits : woocommerce/single-product/.
+   -------------------------------------------------------------------------- */
+add_filter( 'woocommerce_product_tabs', function ( $onglets ) {
+	global $product;
+	if ( isset( $onglets['reviews'] ) && $product ) {
+		$onglets['reviews']['title'] = sprintf( 'Avis (%d)', $product->get_review_count() );
+	}
+	return $onglets;
+} );
+
+// La note (étoiles) passe sous le prix, comme sur la maquette.
+add_action( 'init', function () {
+	remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating', 10 );
+	add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating', 11 );
+} );

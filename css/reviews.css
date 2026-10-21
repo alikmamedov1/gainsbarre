@@ -1,0 +1,306 @@
+/* ==========================================================================
+   reviews.css — Avis clients de la fiche produit (IT-14)
+   ========================================================================== */
+
+/* ---- Étoiles (fiche produit, boutique, avis) : noires, vides en gris clair ---- */
+.star-rating span,
+.star-rating span::before {
+  color: var(--color-black);
+}
+
+.star-rating::before {
+  color: var(--color-black);
+  opacity: 0.2;
+}
+
+.single-product .star-rating {
+  font-size: 1.125rem;
+}
+
+/* Boutique : étoiles alignées à gauche, comme le titre et le prix */
+ul.products li.product .star-rating {
+  margin: 0 0 var(--space-10);
+  font-size: 1rem;
+}
+
+/* Note sous le prix, dans le résumé du produit */
+.single-product .summary .woocommerce-product-rating {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-10) var(--space-15);
+  margin: var(--space-15) 0 0;
+}
+
+.single-product .summary .woocommerce-product-rating .star-rating {
+  margin: 0;
+}
+
+.single-product .summary .woocommerce-review-link {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
+/* ---- Résumé : moyenne et nombre d'avis ---- */
+.gb-reviews__summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-25);
+  padding-block-end: var(--space-30);
+}
+
+.gb-reviews__average {
+  font-size: 2.5rem;
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+}
+
+.gb-reviews__summary .star-rating {
+  display: block;
+  margin: 0 0 var(--space-10);
+}
+
+.gb-reviews__count {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+/* ---- Liste des avis ---- */
+.single-product #reviews.gb-reviews #comments .commentlist {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.single-product #reviews.gb-reviews #comments .commentlist li {
+  margin: 0;
+  padding: var(--space-30) 0;
+  border-block-start: var(--border-width-strong) dotted var(--color-black);
+}
+
+.single-product #reviews.gb-reviews #comments .commentlist li .comment_container {
+  padding: 0;
+}
+
+.single-product #reviews.gb-reviews #comments .commentlist li img.avatar {
+  display: none;
+}
+
+.single-product #reviews.gb-reviews #comments .commentlist li .comment-text {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.single-product #reviews.gb-reviews .commentlist .star-rating {
+  float: none;
+  display: block;
+  margin: 0 0 var(--space-10);
+}
+
+.gb-review__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-10) var(--space-15);
+  margin: 0 0 var(--space-10);
+}
+
+.gb-review__meta time {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+.gb-review__badge {
+  padding: 0.125rem 0.5rem;
+  border: var(--border-width) solid var(--color-black);
+  font-size: 0.75rem;
+  font-style: normal;
+  line-height: 1rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.single-product #reviews.gb-reviews .commentlist .description {
+  max-inline-size: 40rem;
+}
+
+.single-product #reviews.gb-reviews .commentlist .description p {
+  margin: 0;
+}
+
+.single-product #reviews.gb-reviews p.woocommerce-noreviews {
+  margin: 0 0 var(--space-25);
+  padding: 0;
+  color: var(--color-black);
+  background: none;
+  border: 0;
+}
+
+.single-product #reviews.gb-reviews p.woocommerce-noreviews::before {
+  content: none;
+  display: none;
+}
+
+/* ---- Messages : avis réservés aux acheteurs, avis en attente ---- */
+.gb-reviews__notice {
+  margin: var(--space-25) 0 0;
+  padding: var(--space-15) var(--space-25);
+  border: var(--border-width) solid var(--color-black);
+}
+
+.gb-reviews__notice a {
+  font-weight: var(--font-weight-bold);
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
+.single-product #reviews.gb-reviews .woocommerce-review__awaiting-approval {
+  display: block;
+  padding: var(--space-15) var(--space-25);
+  border: var(--border-width) solid var(--color-black);
+  font-style: normal;
+}
+
+/* ---- Formulaire ---- */
+.single-product #reviews.gb-reviews #review_form_wrapper {
+  margin-block-start: var(--space-10);
+  padding-block-start: var(--space-30);
+  border-block-start: var(--border-width-strong) dotted var(--color-black);
+}
+
+.single-product #reviews.gb-reviews .comment-reply-title {
+  display: block;
+  margin: 0 0 var(--space-25);
+  font-size: 1.5rem;
+  font-weight: var(--font-weight-bold);
+  line-height: 2rem;
+}
+
+.single-product #reviews.gb-reviews .comment-form label {
+  display: block;
+  margin: 0 0 var(--space-10);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+}
+
+.single-product #reviews.gb-reviews .comment-form-rating,
+.single-product #reviews.gb-reviews .comment-form-comment {
+  margin: 0 0 var(--space-25);
+}
+
+.single-product #reviews.gb-reviews .comment-form textarea {
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-block-size: 8.75rem;
+  padding: var(--space-15);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: 0;
+  background: var(--color-white);
+  box-shadow: none;
+  font: inherit;
+}
+
+.single-product #reviews.gb-reviews .comment-form textarea:focus {
+  border-color: var(--color-black);
+  outline: 0;
+}
+
+/* Sélecteur d'étoiles de la note (le select est remplacé par des étoiles par WooCommerce) */
+.single-product #reviews.gb-reviews p.stars a {
+  color: var(--color-border);
+}
+
+.single-product #reviews.gb-reviews p.stars a::before {
+  color: var(--color-border);
+  opacity: 1;
+}
+
+.single-product #reviews.gb-reviews p.stars:hover a::before,
+.single-product #reviews.gb-reviews p.stars.selected a.active::before,
+.single-product #reviews.gb-reviews p.stars.selected a:not(.active)::before {
+  color: var(--color-black);
+}
+
+.single-product #reviews.gb-reviews p.stars a:hover ~ a::before,
+.single-product #reviews.gb-reviews p.stars.selected a.active ~ a::before {
+  color: var(--color-border);
+}
+
+.single-product #reviews.gb-reviews .comment-form .form-submit {
+  margin: 0;
+}
+
+.single-product #reviews #respond input#submit {
+  color: var(--color-white);
+  background-color: var(--color-black);
+  border-color: var(--color-black);
+}
+
+.single-product #reviews #respond input#submit:hover,
+.single-product #reviews #respond input#submit:focus-visible {
+  color: var(--color-black);
+  background-color: var(--color-white);
+}
+
+@media (min-width: 48em) {
+  .single-product #reviews #respond input#submit {
+    inline-size: 15rem;
+  }
+}
+
+/* ---- Neutralise la mise en page de Storefront (avatar à gauche, note à droite, fond gris) ---- */
+.single-product #reviews .commentlist li .comment_container .comment-text {
+  float: none;
+  inline-size: auto;
+  margin: 0;
+}
+
+.single-product #reviews .commentlist li .comment_container .comment-text .star-rating {
+  float: none;
+  height: 1em;
+  margin: 0 0 var(--space-10);
+  font-size: 1.125rem;
+}
+
+.single-product #reviews .commentlist li p.meta {
+  margin: 0 0 var(--space-10);
+}
+
+.single-product #reviews .commentlist li p.meta time {
+  display: inline;
+  opacity: 1;
+  font-size: 0.875rem;
+}
+
+.single-product #reviews .commentlist li p.meta .verified {
+  position: static;
+  display: inline-block;
+  inline-size: auto;
+  block-size: auto;
+  text-indent: 0;
+  font-size: 0.75rem;
+}
+
+.single-product #reviews .commentlist li p.meta .verified::before {
+  content: none;
+  display: none;
+}
+
+.single-product #reviews #review_form_wrapper,
+.single-product #reviews #review_form,
+.single-product #reviews #respond {
+  padding-inline: 0;
+  background: none;
+  border-radius: 0;
+}
+
+.single-product #reviews #review_form_wrapper {
+  padding-block-end: 0;
+}
+
+.single-product #reviews .comment-reply-title {
+  display: block;
+}
