@@ -692,3 +692,53 @@ function gainsbarre_equipe_photo( $id, $taille = 'large' ) {
 	}
 	return '<div class="gb-team__photo gb-team__photo--empty" role="img" aria-label="Photo à ajouter"></div>';
 }
+
+// 14. Gammes : critère de classement des produits indépendant des catégories
+
+add_action( 'init', function () {
+	register_taxonomy(
+		'gamme',
+		'product',
+		array(
+			'labels'            => array(
+				'name'          => 'Gammes',
+				'singular_name' => 'Gamme',
+				'menu_name'     => 'Gammes',
+				'all_items'     => 'Toutes les gammes',
+				'edit_item'     => 'Modifier la gamme',
+				'view_item'     => 'Voir la gamme',
+				'update_item'   => 'Mettre à jour la gamme',
+				'add_new_item'  => 'Ajouter une gamme',
+				'new_item_name' => 'Nom de la nouvelle gamme',
+				'search_items'  => 'Rechercher une gamme',
+				'not_found'     => 'Aucune gamme trouvée',
+			),
+			'hierarchical'      => true,
+			'public'            => true,
+			'show_ui'           => true,
+			'show_admin_column' => true,
+			'show_in_rest'      => true,
+			'rewrite'           => array( 'slug' => 'gamme', 'with_front' => false ),
+		)
+	);
+} );
+
+function gainsbarre_gammes_nav() {
+	$gammes = get_terms( array( 'taxonomy' => 'gamme', 'hide_empty' => true, 'orderby' => 'term_id' ) );
+	if ( is_wp_error( $gammes ) || ! $gammes ) {
+		return;
+	}
+	$courante = is_tax( 'gamme' ) ? get_queried_object_id() : 0;
+	echo '<nav class="gb-gammes" aria-label="Gammes"><span class="gb-gammes__label">Gammes</span><ul>';
+	foreach ( $gammes as $gamme ) {
+		$classe = $courante === $gamme->term_id ? ' class="is-current"' : '';
+		printf( '<li%s><a href="%s">%s</a></li>', $classe, esc_url( get_term_link( $gamme ) ), esc_html( $gamme->name ) );
+	}
+	echo '</ul></nav>';
+}
+
+add_action( 'woocommerce_before_shop_loop', function () {
+	if ( is_shop() || is_tax( 'gamme' ) ) {
+		gainsbarre_gammes_nav();
+	}
+}, 5 );

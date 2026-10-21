@@ -423,7 +423,7 @@
 }
 
 /* ---- Pages sans filtres : le contenu prend toute la largeur ---- */
-body:not(.woocommerce-shop):not(.tax-product_cat):not(.tax-product_tag) .site-content .widget-area {
+body:not(.woocommerce-shop):not(.tax-product_cat):not(.tax-product_tag):not(.tax-gamme) .site-content .widget-area {
   display: none;
 }
 
@@ -436,6 +436,7 @@ body:not(.woocommerce-shop):not(.tax-product_cat):not(.tax-product_tag) .site-co
 @media (min-width: 64em) {
   .left-sidebar.woocommerce-shop .site-content .content-area,
   .left-sidebar.tax-product_cat .site-content .content-area,
+  .left-sidebar.tax-gamme .site-content .content-area,
   .left-sidebar.tax-product_tag .site-content .content-area {
     inline-size: auto;
   }

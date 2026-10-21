@@ -6,6 +6,7 @@
 @media (min-width: 64em) {
   .left-sidebar.woocommerce-shop .site-content > .col-full,
   .left-sidebar.tax-product_cat .site-content > .col-full,
+  .left-sidebar.tax-gamme .site-content > .col-full,
   .left-sidebar.tax-product_tag .site-content > .col-full {
     display: grid;
     grid-template-columns: 19.375rem minmax(0, 1fr);
@@ -15,6 +16,7 @@
 
   .left-sidebar.woocommerce-shop .site-content > .col-full > *:not(.content-area):not(.widget-area),
   .left-sidebar.tax-product_cat .site-content > .col-full > *:not(.content-area):not(.widget-area),
+  .left-sidebar.tax-gamme .site-content > .col-full > *:not(.content-area):not(.widget-area),
   .left-sidebar.tax-product_tag .site-content > .col-full > *:not(.content-area):not(.widget-area) {
     grid-column: 1 / -1;
   }
@@ -299,4 +301,50 @@
 /* Pas de pastille « Promo » violette de Storefront */
 .woocommerce span.onsale {
   display: none;
+}
+
+/* ---- Navigation par gamme (boutique et pages de gamme) ---- */
+.gb-gammes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-10) var(--space-15);
+  margin-block-end: var(--space-25);
+}
+
+.gb-gammes__label {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  color: var(--color-grey-dark);
+}
+
+.gb-gammes ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-10);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gb-gammes li {
+  margin: 0;
+}
+
+.gb-gammes a {
+  display: flex;
+  align-items: center;
+  min-block-size: var(--control-height);
+  padding: 0 var(--space-15);
+  font-size: 0.875rem;
+  text-decoration: none;
+  color: var(--color-black);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.gb-gammes a:hover,
+.gb-gammes .is-current a {
+  color: var(--color-white);
+  background-color: var(--color-black);
+  border-color: var(--color-black);
 }
