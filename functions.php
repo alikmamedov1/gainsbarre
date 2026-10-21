@@ -890,3 +890,5 @@ function gainsbarre_frais_page() {
 	</div>
 	<?php
 }
+
+require_once get_stylesheet_directory() . '/inc/invoices.php';
