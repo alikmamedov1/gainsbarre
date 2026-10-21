@@ -923,3 +923,4 @@ function gainsbarre_menu_mobile_par_defaut( $args ) {
 	return $args;
 }
 add_filter( 'wp_nav_menu_args', 'gainsbarre_menu_mobile_par_defaut' );
+require_once get_stylesheet_directory() . '/inc/performance.php';
