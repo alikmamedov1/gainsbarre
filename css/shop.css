@@ -348,3 +348,8 @@
   background-color: var(--color-black);
   border-color: var(--color-black);
 }
+
+/* ---- Panier : le bloc « Ventes croisées » natif est remplacé par « Pour compléter votre commande » ---- */
+.wc-block-cart .wp-block-woocommerce-product-collection {
+  display: none;
+}

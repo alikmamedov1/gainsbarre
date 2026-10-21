@@ -34,6 +34,7 @@
 .single-product div.product > .woocommerce-tabs,
 .single-product div.product > .related,
 .single-product div.product > .upsells,
+.single-product div.product > .gb-cross,
 .single-product div.product > .storefront-product-pagination,
 .single-product div.product > .storefront-sticky-add-to-cart {
   grid-column: 1 / -1;
@@ -275,13 +276,15 @@
 
 /* ---- Produits associés : « Vous aimerez aussi » ---- */
 .single-product .related.products,
-.single-product .up-sells {
+.single-product .up-sells,
+.gb-cross {
   padding-block-start: var(--space-30);
   border-block-start: var(--border-width-strong) dotted var(--color-black);
 }
 
 .single-product .related.products > h2,
-.single-product .up-sells > h2 {
+.single-product .up-sells > h2,
+.gb-cross > h2 {
   margin: 0 0 var(--space-30);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-regular);

@@ -742,3 +742,54 @@ add_action( 'woocommerce_before_shop_loop', function () {
 		gainsbarre_gammes_nav();
 	}
 }, 5 );
+
+// 15. Ventes croisées : produits complémentaires (fiche produit et panier)
+
+function gainsbarre_cross_sells_html( $ids ) {
+	$ids = array_values( array_filter( array_map( 'absint', (array) $ids ) ) );
+	if ( ! $ids ) {
+		return '';
+	}
+	$produits = wc_get_products(
+		array(
+			'include' => $ids,
+			'status'  => 'publish',
+			'limit'   => 3,
+			'orderby' => 'post__in',
+		)
+	);
+	if ( ! $produits ) {
+		return '';
+	}
+	global $post;
+	$ancien_post = $post;
+	ob_start();
+	echo '<section class="gb-cross up-sells products"><h2>Pour compléter votre commande</h2>';
+	woocommerce_product_loop_start();
+	foreach ( $produits as $produit ) {
+		$post = get_post( $produit->get_id() );
+		setup_postdata( $post );
+		wc_get_template_part( 'content', 'product' );
+	}
+	woocommerce_product_loop_end();
+	echo '</section>';
+	$post = $ancien_post;
+	if ( $post ) {
+		setup_postdata( $post );
+	}
+	return ob_get_clean();
+}
+
+add_action( 'woocommerce_after_single_product_summary', function () {
+	global $product;
+	if ( $product ) {
+		echo gainsbarre_cross_sells_html( $product->get_cross_sell_ids() );
+	}
+}, 12 );
+
+add_filter( 'render_block_woocommerce/cart', function ( $contenu ) {
+	if ( ! function_exists( 'WC' ) || ! WC()->cart || WC()->cart->is_empty() ) {
+		return $contenu;
+	}
+	return $contenu . gainsbarre_cross_sells_html( WC()->cart->get_cross_sells() );
+}, 20 );
