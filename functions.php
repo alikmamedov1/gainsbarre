@@ -898,3 +898,5 @@ function gainsbarre_frais_page() {
 require_once get_stylesheet_directory() . '/inc/invoices.php';
 require_once get_stylesheet_directory() . '/inc/filters.php';
 require_once get_stylesheet_directory() . '/inc/shipping.php';
+require_once get_stylesheet_directory() . '/inc/star.php';
+require_once get_stylesheet_directory() . '/inc/slots.php';

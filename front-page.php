@@ -38,6 +38,9 @@ $nouveautes = wc_get_products(
 	)
 );
 
+// Produit star : le plus vendu (US-W.2).
+$star = gainsbarre_produit_star_id() ? wc_get_product( gainsbarre_produit_star_id() ) : null;
+
 // Ce midi : deux plats de la carte du midi.
 $midi_ids = get_posts(
 	array(
@@ -123,6 +126,22 @@ $horaires = array(
 				<li><strong>3. Retirez</strong><span>Au bar, 14 rue de Verneuil, sans attendre.</span></li>
 			</ol>
 		</section>
+
+		<?php if ( $star ) : ?>
+			<section class="gb-home__block gb-home__rule" id="produit-star">
+				<div class="gb-home__row gb-home__head">
+					<p class="gb-home__label">Produit star</p>
+					<div class="gb-home__head-text">
+						<span>Le plus commandé de la carte.</span>
+						<a href="<?php echo esc_url( $boutique ); ?>">Voir toute la carte →</a>
+					</div>
+				</div>
+				<div class="gb-home__row gb-home__grid">
+					<span class="gb-home__spacer"></span>
+					<div><?php gainsbarre_home_grille( array( $star ) ); ?></div>
+				</div>
+			</section>
+		<?php endif; ?>
 
 		<?php if ( $nouveautes ) : ?>
 			<section class="gb-home__block gb-home__rule" id="nouveautes">

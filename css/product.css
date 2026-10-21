@@ -64,6 +64,10 @@
   inset-inline-start: var(--space-10);
 }
 
+.single-product .gb-tag.gb-tag--star {
+  inset-block-start: calc(var(--space-10) * 2 + 2.625rem);
+}
+
 /* Étiquette de stock : dans la galerie, en bas à gauche de la photo */
 .single-product .gb-tag.gb-tag--stock {
   inset-block-start: auto;

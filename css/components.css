@@ -151,6 +151,22 @@ a.added_to_cart {
   color: var(--color-grey-dark);
 }
 
+/* Badge « Produit star » : sous l'étiquette de service, couleurs inversées */
+.gb-tag.gb-tag--star {
+  inset-block-start: calc(var(--space-10) * 2 + 2.625rem);
+  color: var(--color-white);
+  background-color: var(--color-black);
+  border-color: var(--color-black);
+}
+
+.gb-tag.gb-tag--star::before {
+  content: "★";
+  inline-size: auto;
+  block-size: auto;
+  background-color: transparent;
+  border-radius: 0;
+}
+
 /* ---- Champs (liste de tri, quantité, recherche) ---- */
 select,
 .woocommerce-ordering select {
