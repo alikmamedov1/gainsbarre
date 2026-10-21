@@ -813,3 +813,77 @@ add_action( 'init', function () {
 	remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating', 10 );
 	add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_rating', 11 );
 } );
+
+/* --------------------------------------------------------------------------
+   17. Frais de préparation (IT-15)
+   Frais fixes ajoutés au panier tant que son montant est inférieur à un seuil.
+   Montant et seuil modifiables dans WooCommerce > Frais de préparation.
+   -------------------------------------------------------------------------- */
+function gainsbarre_frais_montant() {
+	return max( 0, (float) get_option( 'gainsbarre_frais_montant', 2 ) );
+}
+
+function gainsbarre_frais_seuil() {
+	return max( 0, (float) get_option( 'gainsbarre_frais_seuil', 15 ) );
+}
+
+add_action( 'woocommerce_cart_calculate_fees', function ( $panier ) {
+	if ( is_admin() && ! wp_doing_ajax() ) {
+		return;
+	}
+	$montant = gainsbarre_frais_montant();
+	$seuil   = gainsbarre_frais_seuil();
+	if ( $montant <= 0 || $seuil <= 0 ) {
+		return;
+	}
+	// Montant des produits après réductions : les frais apparaissent ou disparaissent à chaque modification du panier.
+	$total = $panier->get_subtotal() - $panier->get_discount_total();
+	if ( $panier->get_cart_contents_count() > 0 && $total < $seuil ) {
+		$panier->add_fee( 'Frais de préparation', $montant, false );
+	}
+} );
+
+add_action( 'admin_menu', function () {
+	add_submenu_page(
+		'woocommerce',
+		'Frais de préparation',
+		'Frais de préparation',
+		'manage_woocommerce',
+		'gainsbarre-frais',
+		'gainsbarre_frais_page'
+	);
+} );
+
+add_action( 'admin_init', function () {
+	$nettoyer = function ( $valeur ) {
+		return max( 0, (float) str_replace( ',', '.', (string) $valeur ) );
+	};
+	register_setting( 'gainsbarre_frais', 'gainsbarre_frais_montant', array( 'type' => 'number', 'sanitize_callback' => $nettoyer, 'default' => 2 ) );
+	register_setting( 'gainsbarre_frais', 'gainsbarre_frais_seuil', array( 'type' => 'number', 'sanitize_callback' => $nettoyer, 'default' => 15 ) );
+} );
+
+function gainsbarre_frais_page() {
+	?>
+	<div class="wrap">
+		<h1>Frais de préparation</h1>
+		<p>Ces frais fixes sont ajoutés automatiquement au panier tant que le montant des produits est inférieur au seuil. Mettez le montant à 0 pour les désactiver.</p>
+		<form method="post" action="options.php">
+			<?php settings_fields( 'gainsbarre_frais' ); ?>
+			<table class="form-table" role="presentation">
+				<tr>
+					<th scope="row"><label for="gainsbarre_frais_montant">Montant des frais (€)</label></th>
+					<td><input name="gainsbarre_frais_montant" id="gainsbarre_frais_montant" type="number" min="0" step="0.01" value="<?php echo esc_attr( gainsbarre_frais_montant() ); ?>" class="small-text"></td>
+				</tr>
+				<tr>
+					<th scope="row"><label for="gainsbarre_frais_seuil">Seuil du panier (€)</label></th>
+					<td>
+						<input name="gainsbarre_frais_seuil" id="gainsbarre_frais_seuil" type="number" min="0" step="0.01" value="<?php echo esc_attr( gainsbarre_frais_seuil() ); ?>" class="small-text">
+						<p class="description">Les frais s'appliquent si le montant des produits (après réductions) est strictement inférieur à ce seuil.</p>
+					</td>
+				</tr>
+			</table>
+			<?php submit_button( 'Enregistrer' ); ?>
+		</form>
+	</div>
+	<?php
+}
