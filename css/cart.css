@@ -241,8 +241,7 @@
   margin: 0;
 }
 
-/* ---- Code promo et mise à jour ----
-   La cellule garde « display: table-cell » (colspan) : la mise en page passe par des flottants. */
+/* ---- Code promo et mise à jour ---- */
 .woocommerce-cart table.cart td.actions {
   padding-inline: 0;
 }
@@ -377,7 +376,7 @@
   color: var(--color-text-muted);
 }
 
-/* Bouton « Valider la commande » : noir plein, pleine largeur */
+/* Bouton Valider la commande : noir plein, pleine largeur */
 .woocommerce-cart .wc-proceed-to-checkout {
   margin: var(--space-25) 0 0;
   padding: 0;
@@ -472,7 +471,7 @@
     grid-row: 4;
   }
 
-  /* Libellé « PRIX », « QUANTITÉ »… avant chaque valeur (technique WooCommerce) */
+  /* Libellé "PRIX", "QUANTITÉ" avant chaque valeur (technique WooCommerce) */
   .woocommerce-cart table.shop_table_responsive tr td[data-title]::before {
     content: attr(data-title) " : ";
     display: inline;
