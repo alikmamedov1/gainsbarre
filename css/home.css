@@ -1,0 +1,238 @@
+/* ==========================================================================
+   home.css — Page d'accueil (IT-16)
+   Lignes en deux colonnes sur desktop : libellé (310 px) + contenu.
+   ========================================================================== */
+
+.gb-home {
+  display: block;
+}
+
+.gb-home__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-15);
+}
+
+@media (min-width: 64em) {
+  .gb-home__row {
+    grid-template-columns: 19.375rem minmax(0, 1fr);
+    column-gap: var(--space-25);
+  }
+}
+
+.gb-home__spacer {
+  display: none;
+}
+
+@media (min-width: 64em) {
+  .gb-home__spacer {
+    display: block;
+  }
+}
+
+/* Filet de points entre les sections */
+.gb-home__rule {
+  margin-block-start: var(--space-50);
+  padding-block-start: var(--space-50);
+  border-block-start: var(--border-width-strong) dotted var(--color-black);
+}
+
+.gb-home__label {
+  margin: 0;
+  text-transform: uppercase;
+}
+
+/* ---- Présentation ---- */
+.gb-home__hero {
+  padding-block-start: var(--space-30);
+}
+
+.gb-home__title {
+  margin: 0 0 var(--space-30);
+  font-size: var(--font-size-h1-mobile);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+}
+
+@media (min-width: 48em) {
+  .gb-home__title {
+    font-size: var(--font-size-h1);
+  }
+}
+
+.gb-home p {
+  margin: 0 0 var(--space-15);
+}
+
+.gb-home__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-15) var(--space-25);
+  margin-block: var(--space-30);
+}
+
+.gb-home .gb-home__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-inline-size: 12.75rem;
+  min-block-size: var(--control-height);
+  padding: 0 var(--space-25);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+  text-transform: uppercase;
+  color: var(--color-black);
+  background: var(--color-white);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.gb-home .gb-home__button--primary {
+  color: var(--color-white);
+  background: var(--color-black);
+  border-color: var(--color-black);
+}
+
+.gb-home .gb-home__button:hover,
+.gb-home .gb-home__button:focus-visible {
+  color: var(--color-white);
+  background: var(--color-black);
+  border-color: var(--color-black);
+}
+
+.gb-home .gb-home__button--primary:hover,
+.gb-home .gb-home__button--primary:focus-visible {
+  color: var(--color-black);
+  background: var(--color-white);
+}
+
+@media (max-width: 47.99em) {
+  .gb-home__actions {
+    flex-direction: column;
+  }
+}
+
+.gb-home__quote {
+  margin-block-start: var(--space-45);
+}
+
+/* ---- Ce midi + ancres ---- */
+.gb-home__today-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-15) var(--space-45);
+  margin-block-end: var(--space-30);
+}
+
+.gb-home__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-10);
+  padding: var(--space-15) var(--space-25);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  background: var(--color-white);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.gb-home__pill::before {
+  content: "";
+  inline-size: 0.5rem;
+  block-size: 0.5rem;
+  border-radius: 50%;
+  background: var(--color-red, #f43326);
+}
+
+.gb-home__today a,
+.gb-home__anchors a,
+.gb-home__head-text a {
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
+.gb-home__anchors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-10) var(--space-45);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ---- Comment ça marche ---- */
+.gb-home__steps {
+  display: grid;
+  gap: var(--space-25);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 48em) {
+  .gb-home__steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.gb-home__steps strong {
+  display: block;
+  margin-block-end: var(--space-10);
+}
+
+.gb-home__steps span {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+/* ---- Sections de produits ---- */
+.gb-home__head {
+  margin-block-end: var(--space-30);
+}
+
+.gb-home__head-text {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-10) var(--space-25);
+}
+
+/* ---- Retrait ---- */
+.gb-home__address {
+  font-weight: var(--font-weight-bold);
+}
+
+.gb-home__hours {
+  display: grid;
+  grid-template-columns: 8.75rem minmax(0, 1fr);
+  max-inline-size: 40rem;
+  margin: var(--space-30) 0 0;
+}
+
+@media (min-width: 48em) {
+  .gb-home__hours {
+    grid-template-columns: 12.5rem minmax(0, 1fr);
+  }
+}
+
+.gb-home__hours dt,
+.gb-home__hours dd {
+  margin: 0;
+  padding: var(--space-10) 0;
+  font-size: 0.875rem;
+  border-block-end: var(--border-width-strong) dotted var(--color-black);
+}
+
+.gb-home__hours dt {
+  font-weight: var(--font-weight-regular);
+}
+
+.gb-home {
+  padding-block-end: var(--space-50);
+}
+
+/* Les ancres ne passent pas sous l'en-tête */
+.gb-home [id] {
+  scroll-margin-block-start: var(--space-30);
+}

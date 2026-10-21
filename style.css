@@ -3,9 +3,9 @@ Theme Name: Gainsbarre
 Template: storefront
 Description: Thème enfant de Storefront pour le click & collect du Gainsbarre (Maison Gainsbourg).
 Author: Alik Mamedov
-Version: 1.16.0
+Version: 1.17.0
 Text Domain: gainsbarre
 */
 
 /* Les styles du thème sont dans le dossier css/ (chargés par functions.php) :
-   variables.css → base.css → layout.css → components.css → shop.css → product.css → reviews.css */
+   variables.css → base.css → layout.css → components.css → shop.css → product.css → reviews.css → home.css */

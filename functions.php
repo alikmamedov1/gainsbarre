@@ -18,6 +18,9 @@ add_action( 'wp_enqueue_scripts', function () {
 
 	$fichiers = array( 'variables', 'base', 'layout', 'components', 'shop', 'product' );
 	$fichiers[] = 'reviews';
+	if ( is_front_page() ) {
+		$fichiers[] = 'home';
+	}
 	if ( function_exists( 'is_account_page' ) && is_account_page() ) {
 		$fichiers[] = 'account';
 	}
