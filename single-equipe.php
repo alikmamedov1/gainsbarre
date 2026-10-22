@@ -34,7 +34,7 @@ get_header();
 						</dl>
 					<?php endif; ?>
 					<?php if ( function_exists( 'wc_get_page_id' ) ) : ?>
-						<a class="button alt gb-member__cta" href="<?php echo esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ); ?>">Voir la carte</a>
+						<a class="button alt gb-member__cta" href="<?php echo esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ); ?>">Revenir à la carte</a>
 					<?php endif; ?>
 				</div>
 			</article>

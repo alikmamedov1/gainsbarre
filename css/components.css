@@ -94,10 +94,29 @@ button.button:disabled,
 }
 
 /* Après un ajout au panier : lien « Voir le panier » */
-a.added_to_cart {
-  display: inline-block;
+a.added_to_cart,
+.woocommerce a.added_to_cart {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-10);
+  box-sizing: border-box;
+  inline-size: 100%;
+  min-block-size: var(--control-height);
   margin-block-start: var(--space-10);
-  color: var(--color-text);
+  padding: 0 var(--space-25);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+  text-transform: uppercase;
+  color: var(--color-white);
+  background-color: var(--color-black);
+  border: var(--border-width) solid var(--color-black);
+}
+
+a.added_to_cart:hover,
+.woocommerce a.added_to_cart:hover {
+  color: var(--color-black);
+  background-color: var(--color-white);
 }
 
 /* ---- Étiquette de service : « MIDI », « SOIR » ou « MIDI - SOIR » ---- */
