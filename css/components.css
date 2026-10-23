@@ -413,3 +413,22 @@ textarea {
 .wc-block-components-totals-discount .wc-block-components-totals-item__value {
   color: var(--color-red);
 }
+
+/* ---- Bouton "Valider la commande" du panier ---- */
+.wc-block-cart__submit-button.wc-block-components-button {
+  color: var(--color-black);
+  background-color: var(--color-white);
+  border: var(--border-width) solid var(--color-black);
+  border-radius: 0;
+  text-decoration: none;
+}
+
+.wc-block-cart__submit-button.wc-block-components-button:hover,
+.wc-block-cart__submit-button.wc-block-components-button:focus-visible {
+  color: var(--color-white);
+  background-color: var(--color-black);
+}
+
+.wc-block-cart__submit-button.wc-block-components-button .wc-block-components-button__text {
+  text-decoration: none;
+}
